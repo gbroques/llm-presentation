@@ -401,22 +401,24 @@ function keyPressed() {
   
   let maxStates = CONFIG.outputTokens.length * 2; // 2 states per token
   
-  if (keyCode === RIGHT_ARROW) {
-    if (window.parent !== window) {
-      // In reveal.js iframe - send message to parent
-      window.parent.postMessage('next-slide', '*');
-    } else {
-      // Standalone mode - handle locally
+  if (window.parent !== window) {
+    // In reveal.js iframe - use D/A keys for demo control
+    if (key === 'd' || key === 'D') {
       if (currentState < maxStates) {
         advanceState();
       }
+    } else if (key === 'a' || key === 'A') {
+      if (currentState > 0) {
+        reverseState();
+      }
     }
-  } else if (keyCode === LEFT_ARROW) {
-    if (window.parent !== window) {
-      // In reveal.js iframe - send message to parent
-      window.parent.postMessage('prev-slide', '*');
-    } else {
-      // Standalone mode - handle locally
+  } else {
+    // Standalone mode - use arrow keys
+    if (keyCode === RIGHT_ARROW) {
+      if (currentState < maxStates) {
+        advanceState();
+      }
+    } else if (keyCode === LEFT_ARROW) {
       if (currentState > 0) {
         reverseState();
       }

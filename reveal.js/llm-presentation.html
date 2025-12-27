@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Understanding Large Language Models</title>
+
+		<meta name="description" content="A presentation on LLM internals">
+		<meta name="author" content="Your Name">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Understanding Large Language Models</h1>
+					<h3>A Deep Dive into LLM Internals</h3>
+					<p>
+						<small>Press → to continue</small>
+					</p>
+				</section>
+
+				<section>
+					<h2>LLMs as Next-Token Predictors</h2>
+					<p>Large Language Models work by predicting the next token in a sequence</p>
+					<ul>
+						<li>Take input text</li>
+						<li>Predict most likely next token</li>
+						<li>Add token to sequence</li>
+						<li>Repeat process</li>
+					</ul>
+				</section>
+
+				<!-- Interactive Next-Token Prediction Demo -->
+				<section data-background-iframe="next-token-prediction.html" data-background-interactive>
+					<!-- Demo runs full-screen, use arrow keys to navigate -->
+				</section>
+
+				<section>
+					<h2>Tokenization</h2>
+					<p>Before processing, text must be split into tokens</p>
+					<ul>
+						<li>Tokens are the basic units LLMs work with</li>
+						<li>Can be words, subwords, or characters</li>
+						<li>GPT-2 uses Byte Pair Encoding (BPE)</li>
+					</ul>
+				</section>
+
+				<!-- Interactive Tokenization Demo -->
+				<section data-background-iframe="tokenization.html" data-background-interactive>
+					<!-- Demo runs full-screen, use arrow keys to navigate -->
+				</section>
+
+				<section>
+					<h2>Next Steps</h2>
+					<ul>
+						<li>Token embeddings</li>
+						<li>Positional encodings</li>
+						<li>Attention mechanisms</li>
+						<li>Transformer architecture</li>
+					</ul>
+				</section>
+
+				<section>
+					<h1>Thank You</h1>
+					<p>Questions?</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				controls: true,
+				progress: true,
+				center: true,
+				transition: 'slide',
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+			// Listen for messages from embedded demos
+			window.addEventListener('message', function(event) {
+				if (event.data === 'next-slide') {
+					Reveal.next();
+				} else if (event.data === 'prev-slide') {
+					Reveal.prev();
+				}
+			});
+
+		</script>
+
+	</body>
+</html>
