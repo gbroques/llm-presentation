@@ -115,22 +115,28 @@
 				}
 			});
 
-			// Direct keydown handler for demo control
+			// Direct keydown handler for demo control (capture phase to run before reveal.js)
 			document.addEventListener('keydown', function(event) {
-				if (event.key === 'd' || event.key === 'D') {
-					let iframe = document.querySelector('.slide-background.present iframe');
-					if (iframe) {
-						event.preventDefault();
-						iframe.contentWindow.postMessage('demo-advance', '*');
-					}
-				} else if (event.key === 'a' || event.key === 'A') {
-					let iframe = document.querySelector('.slide-background.present iframe');
-					if (iframe) {
-						event.preventDefault();
-						iframe.contentWindow.postMessage('demo-reverse', '*');
+				let iframe = document.querySelector('.slide-background.present iframe');
+				
+				if (iframe) {
+					// Check if it's the next-token-prediction demo
+					let isNextTokenDemo = iframe.src.includes('next-token-prediction.html');
+					
+					if (isNextTokenDemo) {
+						// For next-token demo, use arrow keys
+						if (event.key === 'ArrowRight') {
+							event.preventDefault();
+							event.stopPropagation();
+							iframe.contentWindow.postMessage('demo-advance', '*');
+						} else if (event.key === 'ArrowLeft') {
+							event.preventDefault();
+							event.stopPropagation();
+							iframe.contentWindow.postMessage('demo-reverse', '*');
+						}
 					}
 				}
-			});
+			}, true); // Use capture phase to run before reveal.js
 
 		</script>
 

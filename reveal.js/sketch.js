@@ -449,6 +449,9 @@ window.addEventListener('message', function(event) {
   } else if (event.data === 'demo-reverse') {
     if (currentState > 0) {
       reverseState();
+    } else {
+      // At first state, go to previous slide
+      window.parent.postMessage('prev-slide', '*');
     }
   }
 });
