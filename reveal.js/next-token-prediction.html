@@ -20,7 +20,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 70vh;
+            height: 100vh;
         }
         .instructions {
             text-align: center;
@@ -39,9 +39,18 @@
 </head>
 <body>
     <div id="canvas-container"></div>
-    <div class="instructions">
+    <div class="instructions" id="instructions">
         Use ← → arrow keys to control demo
     </div>
+    <script>
+        // Hide instructions when embedded in presentation
+        if (window.parent !== window) {
+            document.getElementById('instructions').style.display = 'none';
+        } else {
+            // When instructions are shown, adjust canvas height
+            document.getElementById('canvas-container').style.height = '80vh';
+        }
+    </script>
     <script src="sketch.js"></script>
 </body>
 </html>

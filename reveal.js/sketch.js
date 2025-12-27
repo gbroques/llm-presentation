@@ -440,6 +440,7 @@ window.addEventListener('keydown', function(event) {
 // Listen for direct demo commands from parent
 window.addEventListener('message', function(event) {
   if (event.data === 'demo-advance') {
+    if (isAnimating) return; // Prevent input during animations
     let maxStates = CONFIG.outputTokens.length * 2;
     if (currentState < maxStates) {
       advanceState();
@@ -447,6 +448,7 @@ window.addEventListener('message', function(event) {
       window.parent.postMessage('next-slide', '*');
     }
   } else if (event.data === 'demo-reverse') {
+    if (isAnimating) return; // Prevent input during animations
     if (currentState > 0) {
       reverseState();
     } else {
