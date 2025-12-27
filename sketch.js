@@ -1,6 +1,44 @@
+// ===== CONFIGURATION =====
+const CONFIG = {
+  // Sample Data
+  inputText: "Mike is quick,",
+  outputTokens: ["he", "moves", "quickly", "."],
+  
+  // Layout & Spacing
+  elementGap: 20,           // Gap between all elements
+  outerPadding: 100,        // Padding from screen edges
+  
+  // LLM Box
+  llmSize: 180,
+  llmColors: {
+    normal: { fill: [255], stroke: [150] },
+    highlight: { fill: [150, 200, 255, 120], stroke: [100, 180, 255] }
+  },
+  
+  // Typography
+  fonts: {
+    inputOutput: 32,
+    llm: 42,
+    instructions: 20
+  },
+  
+  // Animation
+  animation: {
+    speed: 0.015,           // Animation progress per frame
+    arcDepth: 200,          // Distance below LLM box for arc
+    pulseDecay: 0.05,       // LLM pulse fade rate
+    textShiftSpeed: 0.1     // Input text shift lerp speed
+  },
+  
+  // Canvas
+  canvas: {
+    heightRatio: 0.7,       // Percentage of viewport height
+    instructionsBottom: 20  // Percentage from bottom for instructions
+  }
+};
+
+// ===== STATE VARIABLES =====
 let currentState = 0;
-let inputText = "Mike is quick,";
-let outputTokens = ["he", "moves", "quickly", "."];
 let isAnimating = false;
 let animationProgress = 0;
 let llmPulse = 0;
@@ -8,37 +46,36 @@ let llmHighlight = false;
 let inputShift = 0;
 let targetInputShift = 0;
 
-// Positions
+// ===== LAYOUT VARIABLES =====
+let canvasWidth = 1400;
+let canvasHeight = 600;
 let inputX, inputY;
-let llmX, llmY, llmSize;
+let llmX, llmY;
 let outputX, outputY;
-let canvasWidth = 1400; // Will be updated in setup
-let canvasHeight = 600; // Will be updated in setup
 
 function setup() {
   // Use full window dimensions
   canvasWidth = windowWidth;
-  canvasHeight = windowHeight * 0.7; // Use 70% of viewport height
+  canvasHeight = windowHeight * CONFIG.canvas.heightRatio;
   let canvas = createCanvas(canvasWidth, canvasHeight);
   canvas.parent('canvas-container');
   
   // Center LLM box on canvas, position other elements relative to it
-  llmX = canvasWidth / 2; // Center LLM box
+  llmX = canvasWidth / 2;
   llmY = canvasHeight / 2;
-  llmSize = 180;
   
-  // Position input text closer to LLM box to make arrows shorter
-  let inputTextWidth = 250; // Estimated width for "Mike is quick,"
-  let shorterArrowLength = 80; // Desired shorter arrow length
+  // Position input text to create desired arrow length
+  let inputTextWidth = 250; // Estimated width for input text
+  let desiredArrowLength = 80;
   
-  inputX = llmX - llmSize/2 - 20 - shorterArrowLength - 20 - inputTextWidth; // Work backwards from LLM
+  inputX = llmX - CONFIG.llmSize/2 - CONFIG.elementGap - desiredArrowLength - CONFIG.elementGap - inputTextWidth;
   inputY = canvasHeight / 2;
   
   outputX = 0; // Will be calculated dynamically
   outputY = canvasHeight / 2;
   
   textAlign(CENTER, CENTER);
-  textSize(32);
+  textSize(CONFIG.fonts.inputOutput);
 }
 
 function draw() {
@@ -46,7 +83,7 @@ function draw() {
   
   // Update animations
   if (isAnimating) {
-    animationProgress += 0.015; // Slower animation (was 0.02)
+    animationProgress += CONFIG.animation.speed;
     if (animationProgress >= 1) {
       animationProgress = 0;
       isAnimating = false;
@@ -55,10 +92,10 @@ function draw() {
   }
   
   // Update input shift animation
-  inputShift = lerp(inputShift, targetInputShift, 0.1);
+  inputShift = lerp(inputShift, targetInputShift, CONFIG.animation.textShiftSpeed);
   
   if (llmPulse > 0) {
-    llmPulse -= 0.05;
+    llmPulse -= CONFIG.animation.pulseDecay;
   }
   
   drawInputText();
@@ -71,50 +108,63 @@ function drawInputText() {
   fill(50);
   noStroke();
   textAlign(LEFT, CENTER);
-  textSize(32); // Larger input text
+  textSize(CONFIG.fonts.inputOutput);
   
   let displayText = getCurrentInputText();
   text(displayText, inputX + inputShift, inputY);
+}
+
+// ===== HELPER FUNCTIONS =====
+function calculateArrowLength() {
+  let arrowStartX = inputX + textWidth(CONFIG.inputText) + CONFIG.elementGap;
+  let arrowEndX = llmX - CONFIG.llmSize/2 - CONFIG.elementGap;
+  return arrowEndX - arrowStartX;
+}
+
+function getOutputTokenPosition() {
+  let arrowLength = calculateArrowLength();
+  let rightArrowEndX = llmX + CONFIG.llmSize/2 + CONFIG.elementGap + arrowLength;
+  return rightArrowEndX + CONFIG.elementGap;
 }
 
 function getCurrentInputText() {
   // During reverse animation, hide the token that's moving
   if (isAnimating && (currentState === 2 || currentState === 4 || currentState === 6 || currentState === 8)) {
     if (currentState === 2) {
-      return inputText; // Hide "he" during reverse
+      return CONFIG.inputText; // Hide first token during reverse
     } else if (currentState === 4) {
-      return inputText + " " + outputTokens[0]; // Hide "moves" during reverse
+      return CONFIG.inputText + " " + CONFIG.outputTokens[0]; // Hide second token during reverse
     } else if (currentState === 6) {
-      return inputText + " " + outputTokens[0] + " " + outputTokens[1]; // Hide "quickly" during reverse
+      return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1]; // Hide third token during reverse
     } else if (currentState === 8) {
-      return inputText + " " + outputTokens[0] + " " + outputTokens[1] + " " + outputTokens[2]; // Hide "." during reverse
+      return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1] + " " + CONFIG.outputTokens[2]; // Hide fourth token during reverse
     }
   }
   
   // Normal display
   if (currentState >= 8) {
-    return inputText + " " + outputTokens[0] + " " + outputTokens[1] + " " + outputTokens[2] + outputTokens[3];
+    return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1] + " " + CONFIG.outputTokens[2] + CONFIG.outputTokens[3];
   } else if (currentState >= 6) {
-    return inputText + " " + outputTokens[0] + " " + outputTokens[1] + " " + outputTokens[2];
+    return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1] + " " + CONFIG.outputTokens[2];
   } else if (currentState >= 4) {
-    return inputText + " " + outputTokens[0] + " " + outputTokens[1];
+    return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1];
   } else if (currentState >= 2) {
-    return inputText + " " + outputTokens[0];
+    return CONFIG.inputText + " " + CONFIG.outputTokens[0];
   }
-  return inputText;
+  return CONFIG.inputText;
 }
 
 function drawLLMBox() {
   // Calculate pulse effect
-  let pulseSize = llmSize + (llmPulse * 10);
+  let pulseSize = CONFIG.llmSize + (llmPulse * 10);
   
   // Box styling
   if (llmHighlight) {
-    fill(150, 200, 255, 120); // Brighter, lighter blue
-    stroke(100, 180, 255); // Brighter blue border
+    fill(...CONFIG.llmColors.highlight.fill);
+    stroke(...CONFIG.llmColors.highlight.stroke);
   } else {
-    fill(255);
-    stroke(150);
+    fill(...CONFIG.llmColors.normal.fill);
+    stroke(...CONFIG.llmColors.normal.stroke);
   }
   strokeWeight(2);
   
@@ -126,27 +176,21 @@ function drawLLMBox() {
   fill(50);
   noStroke();
   textAlign(CENTER, CENTER);
-  textSize(42); // Much larger LLM text
+  textSize(CONFIG.fonts.llm);
   text("LLM", llmX, llmY);
-  textSize(32); // Reset to normal text size
+  textSize(CONFIG.fonts.inputOutput); // Reset to normal text size
 }
 
 function drawOutputToken() {
-  // Calculate arrow length same way as in drawArrows
-  let arrowStartX = inputX + textWidth(inputText) + 20; // Same 20px gap
-  let arrowEndX = llmX - llmSize/2 - 20;
-  let actualArrowLength = arrowEndX - arrowStartX;
-  
-  let rightArrowEndX = llmX + llmSize/2 + 20 + actualArrowLength;
-  let dynamicOutputX = rightArrowEndX + 20; // Same 20px gap after arrow
+  let dynamicOutputX = getOutputTokenPosition();
   
   // Show static token when generated but not animating
   if ((currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7) && !isAnimating) {
     fill(50);
     noStroke();
     textAlign(LEFT, CENTER);
-    textSize(32); // Larger output token text
-    let token = outputTokens[Math.floor(currentState / 2)];
+    textSize(CONFIG.fonts.inputOutput);
+    let token = CONFIG.outputTokens[Math.floor(currentState / 2)];
     text(token, dynamicOutputX, outputY);
   }
   
@@ -163,16 +207,9 @@ function drawOutputToken() {
 
 function drawAnimatingToken(isReverse = false) {
   let tokenIndex = isReverse ? Math.floor((currentState - 2) / 2) : Math.floor(currentState / 2);
-  let token = outputTokens[tokenIndex];
+  let token = CONFIG.outputTokens[tokenIndex];
   
-  // Calculate arrow length same way as in drawArrows
-  let arrowStartX = inputX + textWidth(inputText) + 20; // Same 20px gap
-  let arrowEndX = llmX - llmSize/2 - 20;
-  let actualArrowLength = arrowEndX - arrowStartX;
-  
-  let rightArrowEndX = llmX + llmSize/2 + 20 + actualArrowLength;
-  let dynamicOutputX = rightArrowEndX + 20;
-  
+  let dynamicOutputX = getOutputTokenPosition();
   let startX, startY, endX, endY;
   
   if (isReverse) {
@@ -194,7 +231,7 @@ function drawAnimatingToken(isReverse = false) {
   // Arc animation using quadratic bezier curve
   let t = animationProgress;
   let controlX = (startX + endX) / 2;
-  let controlY = llmY + llmSize/2 + 200; // Much further below LLM box
+  let controlY = llmY + CONFIG.llmSize/2 + CONFIG.animation.arcDepth;
   
   // Quadratic bezier curve
   let x = (1-t)*(1-t)*startX + 2*(1-t)*t*controlX + t*t*endX;
@@ -203,19 +240,19 @@ function drawAnimatingToken(isReverse = false) {
   fill(50);
   noStroke();
   textAlign(LEFT, CENTER);
-  textSize(32); // Larger animating token text
+  textSize(CONFIG.fonts.inputOutput);
   text(token, x, y);
 }
 
 function drawArrows() {
   stroke(100);
-  strokeWeight(3); // Thicker arrows
+  strokeWeight(3);
   
-  // Input arrow - use same 20px gap as output side
+  // Input arrow - use helper function
   let arrowY = inputY;
-  let arrowStartX = inputX + textWidth(inputText) + 20; // Same 20px gap as output side
-  let arrowEndX = llmX - llmSize/2 - 20; // 20px gap from LLM box
-  let actualArrowLength = arrowEndX - arrowStartX;
+  let arrowStartX = inputX + textWidth(CONFIG.inputText) + CONFIG.elementGap;
+  let arrowEndX = llmX - CONFIG.llmSize/2 - CONFIG.elementGap;
+  let actualArrowLength = calculateArrowLength();
   
   line(arrowStartX, arrowY, arrowEndX, arrowY);
   drawArrowHead(arrowEndX, arrowY, 0);
@@ -223,8 +260,8 @@ function drawArrows() {
   // Output arrow - use same actual length as left arrow
   if (((currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7) && !isAnimating) || 
       (isAnimating && (currentState === 2 || currentState === 4 || currentState === 6 || currentState === 8))) {
-    let outArrowStartX = llmX + llmSize/2 + 20; // 20px gap from LLM box
-    let outArrowEndX = outArrowStartX + actualArrowLength; // Same length as left arrow
+    let outArrowStartX = llmX + CONFIG.llmSize/2 + CONFIG.elementGap;
+    let outArrowEndX = outArrowStartX + actualArrowLength;
     
     line(outArrowStartX, arrowY, outArrowEndX, arrowY);
     drawArrowHead(outArrowEndX, arrowY, 0);
@@ -246,8 +283,10 @@ function drawArrowHead(x, y, angle) {
 function keyPressed() {
   if (isAnimating) return;
   
+  let maxStates = CONFIG.outputTokens.length * 2; // 2 states per token
+  
   if (keyCode === RIGHT_ARROW) {
-    if (currentState < 8) { // Now goes up to state 8 for 4 tokens
+    if (currentState < maxStates) {
       advanceState();
     }
   } else if (keyCode === LEFT_ARROW) {
@@ -267,7 +306,7 @@ function advanceState() {
   } else if (currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7) {
     // Animate token integration - shift input text left first
     let tokenIndex = Math.floor(currentState / 2);
-    let tokenWidth = textWidth(" " + outputTokens[tokenIndex]);
+    let tokenWidth = textWidth(" " + CONFIG.outputTokens[tokenIndex]);
     targetInputShift -= tokenWidth;
     
     isAnimating = true;
@@ -295,7 +334,7 @@ function completeStateTransition() {
   } else if (currentState === 2 || currentState === 4 || currentState === 6 || currentState === 8) {
     // Reverse animation complete - shift text back and decrement state
     let tokenIndex = Math.floor((currentState - 2) / 2);
-    let tokenWidth = textWidth(" " + outputTokens[tokenIndex]);
+    let tokenWidth = textWidth(" " + CONFIG.outputTokens[tokenIndex]);
     targetInputShift += tokenWidth;
     currentState--;
   }
