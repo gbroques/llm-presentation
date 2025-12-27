@@ -176,9 +176,9 @@ CONFIG.animation.speed = 0.01; // Slower animations
 
 ## File Structure
 ```
-index.html          # Main HTML with responsive CSS
-sketch.js           # Complete p5.js implementation with CONFIG system
-llm-visualization-plan.md  # This documentation
+reveal.js/next-token-prediction.html  # Main HTML with responsive CSS
+reveal.js/sketch.js                   # Complete p5.js implementation with CONFIG system
+llm-visualization-plan.md             # This documentation
 ```
 
 ## Key Features

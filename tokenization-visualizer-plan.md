@@ -44,9 +44,10 @@ tokenizer.html          # Single standalone HTML file
 
 ## File Structure
 ```
-/next-token-prediction.html            # Interactive LLM next-token demo
-/tokenization.html                     # Static tokenization visualization
-/tokenization-visualizer-plan.md       # This planning document
+/reveal.js/next-token-prediction.html      # Interactive LLM next-token demo
+/reveal.js/tokenization.html               # Static tokenization visualization
+/reveal.js/llm-presentation.html           # Reveal.js presentation with embedded demos
+/tokenization-visualizer-plan.md           # This planning document
 ```
 
 ## Implementation Completed
@@ -69,6 +70,6 @@ tokenizer.html          # Single standalone HTML file
 ✅ Zero cognitive load - pure focus on tokenization concept
 
 ## Usage
-- Open `tokenization.html` in browser for full-screen presentation
-- Hover over tokens to see IDs
+- Open `reveal.js/tokenization.html` in browser for standalone demo
+- Or use `reveal.js/llm-presentation.html` for full presentation with embedded demos
 - Change `const text = "Mike is quick,";` to show different examples
