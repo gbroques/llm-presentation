@@ -17,10 +17,12 @@ Illustrate that LLMs generate text by:
          [Arc Animation Path]
 ```
 
-## Sample Data
+## Sample Data - EASILY CONFIGURABLE!
 - **Initial Input**: "Mike is quick,"
 - **Output Tokens**: ["he", "moves", "quickly", "."]
 - **Final Result**: "Mike is quick, he moves quickly."
+
+**Note**: Sample data can be changed in CONFIG object without any code modifications!
 
 ## Layout Specifications
 
@@ -29,13 +31,13 @@ Illustrate that LLMs generate text by:
 - **Canvas**: Responsive width (full viewport), 70% viewport height
 - **No scrollbars**: Overflow hidden, proper CSS box-sizing
 
-### Spacing (All Equal 20px Gaps)
+### Spacing (All Equal 20px Gaps - Configurable)
 - Input text → Left arrow: 20px
 - Left arrow → LLM box: 20px  
 - LLM box → Right arrow: 20px
 - Right arrow → Output token: 20px
 
-### Element Sizes
+### Element Sizes (All Configurable)
 - **LLM Box**: 180px × 180px square
 - **Arrows**: Equal length (~80px), calculated dynamically
 - **Font Sizes**: 
@@ -43,18 +45,16 @@ Illustrate that LLMs generate text by:
   - LLM text: 42px
   - Instructions: 20px
 
-## Animation States & Controls
+## Dynamic State Management
 
-### State Progression (8 total states for 4 tokens)
-1. **State 0**: Initial - "Mike is quick,"
-2. **State 1**: "he" appears on right with arrow
-3. **State 2**: "he" arcs to join input → "Mike is quick, he"
-4. **State 3**: "moves" appears on right with arrow
-5. **State 4**: "moves" arcs to join → "Mike is quick, he moves"
-6. **State 5**: "quickly" appears on right with arrow
-7. **State 6**: "quickly" arcs to join → "Mike is quick, he moves quickly"
-8. **State 7**: "." appears on right with arrow
-9. **State 8**: "." arcs to join → "Mike is quick, he moves quickly."
+### Pattern-Based States (Works with ANY number of tokens!)
+- **Even states** (0, 2, 4, 6...): Token generation (LLM processing)
+- **Odd states** (1, 3, 5, 7...): Token integration (arc animation)
+
+### Automatic Scaling
+- State count: `CONFIG.outputTokens.length * 2`
+- Text building: Dynamic loop through tokens
+- No hardcoded state checks - uses modular arithmetic
 
 ### Controls
 - **Right Arrow Key**: Advance to next state
@@ -87,27 +87,98 @@ Illustrate that LLMs generate text by:
 - **During Animation**: Token only visible as moving arc (not in both positions)
 - **Reverse**: Token disappears from input text immediately when reverse starts
 
+## Configuration System
+
+### Centralized CONFIG Object
+All customizable values are in a single configuration object:
+
+```javascript
+const CONFIG = {
+  // Sample Data - EASILY CHANGEABLE!
+  inputText: "Mike is quick,",
+  outputTokens: ["he", "moves", "quickly", "."],
+  
+  // Layout & Spacing
+  elementGap: 20,           // Gap between all elements
+  
+  // LLM Box
+  llmSize: 180,
+  llmColors: {
+    normal: { fill: [255], stroke: [150] },
+    highlight: { fill: [150, 200, 255, 120], stroke: [100, 180, 255] }
+  },
+  
+  // Typography
+  fonts: {
+    inputOutput: 32,
+    llm: 42,
+    instructions: 20
+  },
+  
+  // Animation
+  animation: {
+    speed: 0.015,           // Animation progress per frame
+    arcDepth: 200,          // Distance below LLM box for arc
+    pulseDecay: 0.05,       // LLM pulse fade rate
+    textShiftSpeed: 0.1     // Input text shift lerp speed
+  },
+  
+  // Canvas
+  canvas: {
+    heightRatio: 0.7,       // Percentage of viewport height
+    instructionsBottom: 20  // Percentage from bottom for instructions
+  }
+};
+```
+
+### Easy Customization Examples
+```javascript
+// Change to 3 tokens - works automatically!
+CONFIG.inputText = "The cat";
+CONFIG.outputTokens = ["sat", "down"];
+
+// Change to 6 tokens - works automatically!
+CONFIG.inputText = "I love";
+CONFIG.outputTokens = ["to", "code", "in", "JavaScript", "daily"];
+
+// Adjust spacing throughout
+CONFIG.elementGap = 30; // Makes everything more spaced out
+
+// Change animation speed
+CONFIG.animation.speed = 0.01; // Slower animations
+```
+
 ## Technical Implementation
+
+### Helper Functions
+- `getCurrentTokenIndex()` - Dynamic token index calculation
+- `isTokenGenerationState()` - Pattern-based state checking
+- `isTokenIntegrationState()` - Pattern-based state checking
+- `calculateArrowLength()` - Centralized positioning logic
+- `getOutputTokenPosition()` - Reusable positioning
 
 ### Responsive Design
 - Canvas width: `windowWidth` (full viewport)
-- Canvas height: `windowHeight * 0.7` (70% of viewport)
+- Canvas height: `windowHeight * CONFIG.canvas.heightRatio`
 - No horizontal/vertical scrollbars
-- Instructions positioned at bottom 20% of viewport
+- Instructions positioned at bottom of viewport
 
 ### Font Consistency
 - All text uses same styling (no stroke, consistent fill)
 - Proper text alignment for visual balance
+- Configurable font sizes throughout
 
-### State Management
-- Prevents input during animations
-- Proper state transitions with animation completion callbacks
-- Reversible animations following exact same paths
+### Dynamic State Management Benefits
+- **No hardcoded limits**: Works with any number of tokens
+- **Pattern recognition**: Even/odd state logic
+- **Maintainable**: Single place to change behavior
+- **Scalable**: Add/remove tokens without code changes
 
 ## File Structure
 ```
 index.html          # Main HTML with responsive CSS
-sketch.js           # Complete p5.js implementation
+sketch.js           # Complete p5.js implementation with CONFIG system
+llm-visualization-plan.md  # This documentation
 ```
 
 ## Key Features
@@ -117,4 +188,7 @@ sketch.js           # Complete p5.js implementation
 - ✅ LLM box centered with visual feedback
 - ✅ Clean, modern styling
 - ✅ No scrollbars or layout issues
+- ✅ **Centralized configuration system**
+- ✅ **Dynamic state management for any token count**
+- ✅ **Easy customization without code changes**
 - ✅ Educational clarity showing LLM token prediction process
