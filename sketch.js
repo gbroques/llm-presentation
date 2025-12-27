@@ -1,6 +1,6 @@
 // ===== CONFIGURATION =====
 const CONFIG = {
-  // Sample Data
+  // Sample Data - EASILY CHANGEABLE!
   inputText: "Mike is quick,",
   outputTokens: ["he", "moves", "quickly", "."],
   
@@ -127,31 +127,31 @@ function getOutputTokenPosition() {
   return rightArrowEndX + CONFIG.elementGap;
 }
 
+function getCurrentTokenIndex() {
+  return Math.floor(currentState / 2);
+}
+
+function isTokenGenerationState() {
+  return currentState % 2 === 1; // Odd states show tokens
+}
+
+function isTokenIntegrationState() {
+  return currentState % 2 === 0 && currentState > 0; // Even states (except 0) integrate tokens
+}
+
 function getCurrentInputText() {
+  let tokensToShow = Math.floor(currentState / 2);
+  
   // During reverse animation, hide the token that's moving
-  if (isAnimating && (currentState === 2 || currentState === 4 || currentState === 6 || currentState === 8)) {
-    if (currentState === 2) {
-      return CONFIG.inputText; // Hide first token during reverse
-    } else if (currentState === 4) {
-      return CONFIG.inputText + " " + CONFIG.outputTokens[0]; // Hide second token during reverse
-    } else if (currentState === 6) {
-      return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1]; // Hide third token during reverse
-    } else if (currentState === 8) {
-      return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1] + " " + CONFIG.outputTokens[2]; // Hide fourth token during reverse
-    }
+  if (isAnimating && isTokenIntegrationState()) {
+    tokensToShow = Math.floor((currentState - 2) / 2);
   }
   
-  // Normal display
-  if (currentState >= 8) {
-    return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1] + " " + CONFIG.outputTokens[2] + CONFIG.outputTokens[3];
-  } else if (currentState >= 6) {
-    return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1] + " " + CONFIG.outputTokens[2];
-  } else if (currentState >= 4) {
-    return CONFIG.inputText + " " + CONFIG.outputTokens[0] + " " + CONFIG.outputTokens[1];
-  } else if (currentState >= 2) {
-    return CONFIG.inputText + " " + CONFIG.outputTokens[0];
+  let result = CONFIG.inputText;
+  for (let i = 0; i < tokensToShow; i++) {
+    result += " " + CONFIG.outputTokens[i];
   }
-  return CONFIG.inputText;
+  return result;
 }
 
 function drawLLMBox() {
@@ -184,29 +184,29 @@ function drawLLMBox() {
 function drawOutputToken() {
   let dynamicOutputX = getOutputTokenPosition();
   
-  // Show static token when generated but not animating
-  if ((currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7) && !isAnimating) {
+  // Show static token when in generation state and not animating
+  if (isTokenGenerationState() && !isAnimating) {
     fill(50);
     noStroke();
     textAlign(LEFT, CENTER);
     textSize(CONFIG.fonts.inputOutput);
-    let token = CONFIG.outputTokens[Math.floor(currentState / 2)];
+    let token = CONFIG.outputTokens[getCurrentTokenIndex()];
     text(token, dynamicOutputX, outputY);
   }
   
   // Draw animating token during integration (forward)
-  if (isAnimating && (currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7)) {
+  if (isAnimating && isTokenGenerationState()) {
     drawAnimatingToken(false); // forward animation
   }
   
-  // Draw animating token during reverse (backward) - token disappears from input, only shows arc
-  if (isAnimating && (currentState === 2 || currentState === 4 || currentState === 6 || currentState === 8)) {
+  // Draw animating token during reverse (backward)
+  if (isAnimating && isTokenIntegrationState()) {
     drawAnimatingToken(true); // reverse animation
   }
 }
 
 function drawAnimatingToken(isReverse = false) {
-  let tokenIndex = isReverse ? Math.floor((currentState - 2) / 2) : Math.floor(currentState / 2);
+  let tokenIndex = isReverse ? getCurrentTokenIndex() - 1 : getCurrentTokenIndex();
   let token = CONFIG.outputTokens[tokenIndex];
   
   let dynamicOutputX = getOutputTokenPosition();
@@ -257,9 +257,8 @@ function drawArrows() {
   line(arrowStartX, arrowY, arrowEndX, arrowY);
   drawArrowHead(arrowEndX, arrowY, 0);
   
-  // Output arrow - use same actual length as left arrow
-  if (((currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7) && !isAnimating) || 
-      (isAnimating && (currentState === 2 || currentState === 4 || currentState === 6 || currentState === 8))) {
+  // Output arrow - show when token is visible or during reverse animation
+  if ((isTokenGenerationState() && !isAnimating) || (isAnimating && isTokenIntegrationState())) {
     let outArrowStartX = llmX + CONFIG.llmSize/2 + CONFIG.elementGap;
     let outArrowEndX = outArrowStartX + actualArrowLength;
     
@@ -297,15 +296,15 @@ function keyPressed() {
 }
 
 function advanceState() {
-  if (currentState === 0 || currentState === 2 || currentState === 4 || currentState === 6) {
-    // Generate token
+  if (currentState % 2 === 0) {
+    // Even states: Generate token (LLM processing)
     llmHighlight = true;
     llmPulse = 1;
     setTimeout(() => { llmHighlight = false; }, 500);
     currentState++;
-  } else if (currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7) {
-    // Animate token integration - shift input text left first
-    let tokenIndex = Math.floor(currentState / 2);
+  } else {
+    // Odd states: Animate token integration
+    let tokenIndex = getCurrentTokenIndex();
     let tokenWidth = textWidth(" " + CONFIG.outputTokens[tokenIndex]);
     targetInputShift -= tokenWidth;
     
@@ -315,12 +314,12 @@ function advanceState() {
 }
 
 function reverseState() {
-  if (currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7) {
-    // Remove token
+  if (isTokenGenerationState()) {
+    // Remove token (go back to previous even state)
     llmHighlight = false;
     currentState--;
-  } else if (currentState === 2 || currentState === 4 || currentState === 6 || currentState === 8) {
-    // Reverse animation - token moves from input back to output, then shift text right
+  } else if (isTokenIntegrationState()) {
+    // Reverse animation - token moves from input back to output
     isAnimating = true;
     animationProgress = 0;
     // Note: currentState stays the same during animation, will be decremented in completeStateTransition
@@ -328,12 +327,12 @@ function reverseState() {
 }
 
 function completeStateTransition() {
-  if (currentState === 1 || currentState === 3 || currentState === 5 || currentState === 7) {
-    // Forward animation complete - advance state and shift text
+  if (isTokenGenerationState()) {
+    // Forward animation complete - advance to next even state
     currentState++;
-  } else if (currentState === 2 || currentState === 4 || currentState === 6 || currentState === 8) {
+  } else if (isTokenIntegrationState()) {
     // Reverse animation complete - shift text back and decrement state
-    let tokenIndex = Math.floor((currentState - 2) / 2);
+    let tokenIndex = getCurrentTokenIndex() - 1;
     let tokenWidth = textWidth(" " + CONFIG.outputTokens[tokenIndex]);
     targetInputShift += tokenWidth;
     currentState--;
