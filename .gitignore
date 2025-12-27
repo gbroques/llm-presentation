@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.eml
+
+# System files
+.DS_Store
+.svn
+
+# Logs
+log/*.log
+
+# Temporary files
+tmp/**
+out/
+
+# Sass cache
+.sass-cache
