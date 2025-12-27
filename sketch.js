@@ -37,7 +37,7 @@ const CONFIG = {
   // LLM Box
   llmSize: 180,
   llmColors: {
-    normal: { fill: [255], stroke: [150] },
+    normal: { fill: [248, 249, 250], stroke: [108, 117, 125] },
     highlight: { fill: [150, 200, 255, 120], stroke: [100, 180, 255] }
   },
   
@@ -113,7 +113,7 @@ function setup() {
  * Handles all animations: token arc movement, input text shifting, LLM pulse, and fade effects
  */
 function draw() {
-  background(245);
+  background(255);
   
   // Update animations
   if (isAnimating) {
