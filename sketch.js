@@ -224,25 +224,41 @@ function drawLLMBox() {
   // Calculate pulse effect
   let pulseSize = CONFIG.llmSize + (llmPulse * 10);
   
+  // Interpolate colors based on pulse intensity
+  let normalFill = CONFIG.llmColors.normal.fill;
+  let highlightFill = CONFIG.llmColors.highlight.fill;
+  let normalStroke = CONFIG.llmColors.normal.stroke;
+  let highlightStroke = CONFIG.llmColors.highlight.stroke;
+  
+  // Use pulse value to interpolate between normal and highlight colors
+  let t = llmPulse; // Use pulse value as interpolation factor
+  let currentFill = [
+    lerp(normalFill[0], highlightFill[0], t),
+    lerp(normalFill[1], highlightFill[1], t),
+    lerp(normalFill[2], highlightFill[2], t),
+    255 // Always fully opaque
+  ];
+  let currentStroke = [
+    lerp(normalStroke[0], highlightStroke[0], t),
+    lerp(normalStroke[1], highlightStroke[1], t),
+    lerp(normalStroke[2], highlightStroke[2], t)
+  ];
+  
   // Box styling
-  if (llmHighlight) {
-    fill(...CONFIG.llmColors.highlight.fill);
-    stroke(...CONFIG.llmColors.highlight.stroke);
-  } else {
-    fill(...CONFIG.llmColors.normal.fill);
-    stroke(...CONFIG.llmColors.normal.stroke);
-  }
+  fill(...currentFill);
+  stroke(...currentStroke);
   strokeWeight(2);
   
   // Draw box
   rectMode(CENTER);
   rect(llmX, llmY, pulseSize, pulseSize);
   
-  // Draw text
+  // Draw text with pulse scaling
   fill(50);
   noStroke();
   textAlign(CENTER, CENTER);
-  textSize(CONFIG.fonts.llm);
+  let pulsedTextSize = CONFIG.fonts.llm + (llmPulse * 8); // Scale text with pulse
+  textSize(pulsedTextSize);
   text("LLM", llmX, llmY);
   textSize(CONFIG.fonts.inputOutput); // Reset to normal text size
 }
@@ -254,9 +270,20 @@ function drawLLMBox() {
 function drawOutputToken() {
   let dynamicOutputX = getOutputTokenPosition();
   
-  // Show static token when in generation state and not animating
-  if (isTokenGenerationState() && !isAnimating) {
-    fill(50);
+  // Show static token when in generation state and not animating, or when pulse is active
+  if ((isTokenGenerationState() && !isAnimating) || llmPulse > 0) {
+    // Calculate alpha for fade in effect - fade in from start to peak of pulse
+    let alpha = 255;
+    if (llmPulse > 0) {
+      // Fade in during first half of pulse: invisible at start (pulse=1), visible at peak (pulse=0.5)
+      if (llmPulse > 0.5) {
+        alpha = (1 - llmPulse) * 2 * 255; // Fade in from 1.0 to 0.5
+      } else {
+        alpha = 255; // Fully visible from peak onwards
+      }
+    }
+    
+    fill(50, 50, 50, alpha); // Dark gray with varying alpha
     noStroke();
     textAlign(LEFT, CENTER);
     textSize(CONFIG.fonts.inputOutput);
@@ -336,8 +363,8 @@ function drawArrows() {
   line(arrowStartX, arrowY, arrowEndX, arrowY);
   drawArrowHead(arrowEndX, arrowY, 0);
   
-  // Output arrow - show when token is visible or during reverse animation
-  if ((isTokenGenerationState() && !isAnimating) || (isAnimating && isTokenIntegrationState())) {
+  // Output arrow - show when token is visible, during reverse animation, or when pulse is active
+  if ((isTokenGenerationState() && !isAnimating) || (isAnimating && isTokenIntegrationState()) || llmPulse > 0) {
     let outArrowStartX = llmX + CONFIG.llmSize/2 + CONFIG.elementGap;
     let outArrowEndX = outArrowStartX + actualArrowLength;
     
