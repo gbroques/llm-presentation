@@ -19,13 +19,17 @@
         .token {
             display: inline-block;
             padding: 8px 12px;
-            margin: 4px;
-            border-radius: 6px;
             font-size: 72px;
             font-weight: 500;
+            font-family: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Menlo', monospace;
             position: relative;
             cursor: pointer;
             border: 2px solid;
+            white-space: pre;
+        }
+        
+        .token:hover {
+            opacity: 1;
         }
         
         .tooltip {
@@ -77,6 +81,18 @@
             return `hsl(${hue}, 70%, 65%)`;
         }
         
+        // Get darker hover color (less transparent/more saturated)
+        function getHoverColor(tokenId) {
+            const hue = (tokenId * 137.508) % 360;
+            return `hsl(${hue}, 70%, 75%)`; // Darker than the original 85%
+        }
+        
+        // Get darker hover border color
+        function getHoverBorderColor(tokenId) {
+            const hue = (tokenId * 137.508) % 360;
+            return `hsl(${hue}, 70%, 55%)`; // Darker than the original 65%
+        }
+        
         // Escape HTML
         function escapeHtml(text) {
             const div = document.createElement('div');
@@ -94,11 +110,10 @@
                 const tokenText = GPTTokenizer_r50k_base.decode([tokenId]);
                 const backgroundColor = getTokenColor(tokenId);
                 const borderColor = getBorderColor(tokenId);
+                const hoverColor = getHoverColor(tokenId);
+                const hoverBorderColor = getHoverBorderColor(tokenId);
                 
-                html += `<span class="token" style="background-color: ${backgroundColor}; border-color: ${borderColor};">
-                    ${escapeHtml(tokenText)}
-                    <div class="tooltip">ID: ${tokenId}</div>
-                </span>`;
+                html += `<span class="token" style="background-color: ${backgroundColor}; border-color: ${borderColor};" onmouseenter="this.style.backgroundColor='${hoverColor}'; this.style.borderColor='${hoverBorderColor}'" onmouseleave="this.style.backgroundColor='${backgroundColor}'; this.style.borderColor='${borderColor}'">${escapeHtml(tokenText)}<div class="tooltip">ID: ${tokenId}</div></span>`;
             });
             
             document.getElementById('tokenOutput').innerHTML = html;

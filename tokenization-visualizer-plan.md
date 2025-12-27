@@ -44,7 +44,8 @@ tokenizer.html          # Single standalone HTML file
 
 ## File Structure
 ```
-/tokenizer.html                        # Complete standalone visualization
+/next-token-prediction.html            # Interactive LLM next-token demo
+/tokenization.html                     # Static tokenization visualization
 /tokenization-visualizer-plan.md       # This planning document
 ```
 
@@ -68,6 +69,6 @@ tokenizer.html          # Single standalone HTML file
 ✅ Zero cognitive load - pure focus on tokenization concept
 
 ## Usage
-- Open `tokenizer.html` in browser for full-screen presentation
+- Open `tokenization.html` in browser for full-screen presentation
 - Hover over tokens to see IDs
 - Change `const text = "Mike is quick,";` to show different examples
