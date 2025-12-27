@@ -1,3 +1,29 @@
+/**
+ * @fileoverview Interactive LLM Next-Token Prediction Visualization
+ * 
+ * This p5.js sketch demonstrates how Large Language Models work as next-token predictors.
+ * It shows the iterative process of token generation and sequence building through
+ * interactive animations with smooth arc movements and visual feedback.
+ * 
+ * Key Features:
+ * - Dynamic state management that works with any number of tokens
+ * - Centralized configuration system for easy customization
+ * - Smooth bidirectional animations with arc paths
+ * - Responsive design that adapts to viewport size
+ * - Pattern-based state logic (even = generation, odd = integration)
+ * 
+ * Usage:
+ * - Right Arrow: Advance to next state (generate/integrate tokens)
+ * - Left Arrow: Reverse to previous state (with reverse animations)
+ * 
+ * Configuration:
+ * All customizable values are in the CONFIG object at the top of this file.
+ * Change CONFIG.inputText and CONFIG.outputTokens to use different sample data.
+ * 
+ * @author Generated with assistance from Claude (Anthropic)
+ * @version 1.0.0
+ */
+
 // ===== CONFIGURATION =====
 const CONFIG = {
   // Sample Data - EASILY CHANGEABLE!
@@ -53,6 +79,10 @@ let inputX, inputY;
 let llmX, llmY;
 let outputX, outputY;
 
+/**
+ * p5.js setup function - initializes canvas and calculates element positions
+ * Creates responsive canvas and positions LLM box at center with other elements relative to it
+ */
 function setup() {
   // Use full window dimensions
   canvasWidth = windowWidth;
@@ -78,6 +108,10 @@ function setup() {
   textSize(CONFIG.fonts.inputOutput);
 }
 
+/**
+ * p5.js draw function - main animation loop
+ * Handles all animations: token arc movement, input text shifting, LLM pulse, and fade effects
+ */
 function draw() {
   background(245);
   
@@ -104,6 +138,10 @@ function draw() {
   drawArrows();
 }
 
+/**
+ * Draws the input text with proper positioning and shifting animation
+ * Text shifts left as new tokens are integrated
+ */
 function drawInputText() {
   fill(50);
   noStroke();
@@ -114,31 +152,55 @@ function drawInputText() {
   text(displayText, inputX + inputShift, inputY);
 }
 
-// ===== HELPER FUNCTIONS =====
+/**
+ * Calculates the dynamic length of arrows based on available space
+ * @returns {number} The calculated arrow length in pixels
+ */
 function calculateArrowLength() {
   let arrowStartX = inputX + textWidth(CONFIG.inputText) + CONFIG.elementGap;
   let arrowEndX = llmX - CONFIG.llmSize/2 - CONFIG.elementGap;
   return arrowEndX - arrowStartX;
 }
 
+/**
+ * Calculates the dynamic position for output tokens based on arrow length
+ * @returns {number} The x-coordinate where output tokens should be positioned
+ */
 function getOutputTokenPosition() {
   let arrowLength = calculateArrowLength();
   let rightArrowEndX = llmX + CONFIG.llmSize/2 + CONFIG.elementGap + arrowLength;
   return rightArrowEndX + CONFIG.elementGap;
 }
 
+/**
+ * Gets the current token index based on the current state
+ * @returns {number} Index of the current token in CONFIG.outputTokens array
+ */
 function getCurrentTokenIndex() {
   return Math.floor(currentState / 2);
 }
 
+/**
+ * Checks if the current state is a token generation state (odd states)
+ * @returns {boolean} True if in a token generation state
+ */
 function isTokenGenerationState() {
   return currentState % 2 === 1; // Odd states show tokens
 }
 
+/**
+ * Checks if the current state is a token integration state (even states > 0)
+ * @returns {boolean} True if in a token integration state
+ */
 function isTokenIntegrationState() {
   return currentState % 2 === 0 && currentState > 0; // Even states (except 0) integrate tokens
 }
 
+/**
+ * Builds the current input text dynamically based on state and animations
+ * Handles hiding tokens during reverse animations
+ * @returns {string} The current input text to display
+ */
 function getCurrentInputText() {
   let tokensToShow = Math.floor(currentState / 2);
   
@@ -154,6 +216,10 @@ function getCurrentInputText() {
   return result;
 }
 
+/**
+ * Draws the LLM box with pulse animation and highlight effects
+ * Shows visual feedback during token generation with color changes and scaling
+ */
 function drawLLMBox() {
   // Calculate pulse effect
   let pulseSize = CONFIG.llmSize + (llmPulse * 10);
@@ -181,6 +247,10 @@ function drawLLMBox() {
   textSize(CONFIG.fonts.inputOutput); // Reset to normal text size
 }
 
+/**
+ * Draws output tokens in their static position or during arc animations
+ * Handles both forward (generation) and reverse (integration) animations
+ */
 function drawOutputToken() {
   let dynamicOutputX = getOutputTokenPosition();
   
@@ -205,6 +275,11 @@ function drawOutputToken() {
   }
 }
 
+/**
+ * Draws a token following a smooth arc animation path
+ * Uses quadratic Bezier curve that passes below the LLM box
+ * @param {boolean} isReverse - True for reverse animation (input to output), false for forward (output to input)
+ */
 function drawAnimatingToken(isReverse = false) {
   let tokenIndex = isReverse ? getCurrentTokenIndex() - 1 : getCurrentTokenIndex();
   let token = CONFIG.outputTokens[tokenIndex];
@@ -244,11 +319,15 @@ function drawAnimatingToken(isReverse = false) {
   text(token, x, y);
 }
 
+/**
+ * Draws both input and output arrows with equal lengths
+ * Output arrow visibility depends on current state and animation status
+ */
 function drawArrows() {
   stroke(100);
   strokeWeight(3);
   
-  // Input arrow - use helper function
+  // Input arrow - always show
   let arrowY = inputY;
   let arrowStartX = inputX + textWidth(CONFIG.inputText) + CONFIG.elementGap;
   let arrowEndX = llmX - CONFIG.llmSize/2 - CONFIG.elementGap;
@@ -267,6 +346,12 @@ function drawArrows() {
   }
 }
 
+/**
+ * Draws an arrow head at the specified position and angle
+ * @param {number} x - X coordinate of arrow head tip
+ * @param {number} y - Y coordinate of arrow head tip  
+ * @param {number} angle - Rotation angle of arrow head in radians
+ */
 function drawArrowHead(x, y, angle) {
   push();
   translate(x, y);
@@ -279,6 +364,11 @@ function drawArrowHead(x, y, angle) {
 
 
 
+/**
+ * p5.js keyPressed function - handles user input for navigation
+ * Right arrow advances states, left arrow reverses states
+ * Prevents input during animations to avoid state corruption
+ */
 function keyPressed() {
   if (isAnimating) return;
   
@@ -295,6 +385,11 @@ function keyPressed() {
   }
 }
 
+/**
+ * Advances to the next state in the visualization
+ * Even states trigger LLM processing and token generation
+ * Odd states trigger token integration animations
+ */
 function advanceState() {
   if (currentState % 2 === 0) {
     // Even states: Generate token (LLM processing)
@@ -313,6 +408,10 @@ function advanceState() {
   }
 }
 
+/**
+ * Reverses to the previous state in the visualization
+ * Handles both token removal and reverse arc animations
+ */
 function reverseState() {
   if (isTokenGenerationState()) {
     // Remove token (go back to previous even state)
@@ -326,6 +425,10 @@ function reverseState() {
   }
 }
 
+/**
+ * Completes the current state transition after animations finish
+ * Handles both forward progression and reverse cleanup
+ */
 function completeStateTransition() {
   if (isTokenGenerationState()) {
     // Forward animation complete - advance to next even state
