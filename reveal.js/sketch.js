@@ -406,6 +406,9 @@ function keyPressed() {
     if (key === 'd' || key === 'D') {
       if (currentState < maxStates) {
         advanceState();
+      } else {
+        // Demo complete - signal parent to advance slide
+        window.parent.postMessage('next-slide', '*');
       }
     } else if (key === 'a' || key === 'A') {
       if (currentState > 0) {
@@ -425,6 +428,30 @@ function keyPressed() {
     }
   }
 }
+
+// Global keydown listener to capture D/A keys even when iframe not focused
+window.addEventListener('keydown', function(event) {
+  if (window.parent !== window && (event.key === 'd' || event.key === 'D' || event.key === 'a' || event.key === 'A')) {
+    event.preventDefault();
+    keyPressed();
+  }
+}, true);
+
+// Listen for direct demo commands from parent
+window.addEventListener('message', function(event) {
+  if (event.data === 'demo-advance') {
+    let maxStates = CONFIG.outputTokens.length * 2;
+    if (currentState < maxStates) {
+      advanceState();
+    } else {
+      window.parent.postMessage('next-slide', '*');
+    }
+  } else if (event.data === 'demo-reverse') {
+    if (currentState > 0) {
+      reverseState();
+    }
+  }
+});
 
 /**
  * Advances to the next state in the visualization
