@@ -32,10 +32,10 @@ const CONFIG = {
   
   // Layout & Spacing
   elementGap: 20,           // Gap between all elements
-  outerPadding: 100,        // Padding from screen edges
+  outerPadding: 250,        // Padding from screen edges (increased from 200)
   
   // LLM Box
-  llmSize: 180,
+  llmSize: 180,             // Increased from 160
   llmColors: {
     normal: { fill: [248, 249, 250], stroke: [108, 117, 125] },
     highlight: { fill: [150, 200, 255, 120], stroke: [100, 180, 255] }
@@ -43,8 +43,8 @@ const CONFIG = {
   
   // Typography
   fonts: {
-    inputOutput: 32,
-    llm: 42,
+    inputOutput: 42,        // Increased from 32
+    llm: 40,                // Increased from 36
     instructions: 20
   },
   
