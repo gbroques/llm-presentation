@@ -43,7 +43,7 @@
 
 				<section>
 					<p style="font-size: 3em;">🔮</p>
-					<p style="font-size: 1.5em;">LLMs as <span class="fragment highlight-blue"><strong>next-token predictors</strong></span></p>
+					<p style="font-size: 1.5em;">LLMs are <span class="fragment highlight-blue"><strong>next-token predictors</strong></span></p>
 				</section>
 
 				<section>
@@ -61,7 +61,7 @@
 				</section>
 
 				<section>
-					<p style="font-size: 1.5em;">LLMs are <span class="fragment highlight-blue" data-fragment-index="0"><strong>auto-regressive next-token predictors</strong></span>.</p>
+					<p style="font-size: 1.5em;">LLMs are <span style="border-bottom: 2px solid rgb(108, 117, 125);"><span class="fragment" data-fragment-index="0"><strong>auto-regressive next-token predictors</strong></span></span>.</p>
 					<p class="fragment" data-fragment-index="0" style="font-size: 3em;">🤓</p>
 				</section>
 
@@ -79,13 +79,33 @@
 				</section>
 
 				<section>
-					<h2>Tokenization</h2>
-					<p class="fragment">The process of splitting text into smaller units called "<span class="fragment highlight-blue"><strong>tokens</strong></span>".</p>
+					<p style="font-size: 1.5em;"><strong>Tokenization</strong><span class="fragment"> — the process of splitting text into smaller units called "<span class="fragment highlight-blue"><strong>tokens</strong></span>".</span></p>
 				</section>
 
 				<!-- Interactive Tokenization Demo -->
 				<section data-background-iframe="tokenization.html" data-background-interactive>
 					<!-- Demo runs full-screen, use arrow keys to navigate -->
+				</section>
+
+				<section>
+					<p style="font-size: 1.8em;"><strong>Token ID</strong><span class="fragment" data-fragment-index="0"> — the position within the <span class="fragment highlight-red" data-fragment-index="1"><strong>token embedding matrix</strong></span></span></p>
+				</section>
+
+				<section>
+					<p style="font-size: 2em;">What is a <span class="fragment highlight-blue"><strong>token embedding</strong></span>?</p>
+					<p class="fragment highlight-blue" style="font-size: 3em;">🤔</p>
+				</section>
+
+				<section>
+					<p style="font-size: 1.5em;"><strong>Token embedding</strong><span class="fragment"> — a list of numbers that encode the meaning for a given token.</span></p>
+				</section>
+
+				<section>
+					<p>$$\underbrace{[-0.05, -0.04, 0.22, -0.17, -0.14, \ldots, 0.10]}_{768 \text{ values}}$$</p>
+					<p class="fragment" style="font-size: 1.2em;">encodes the meaning of <span style="background-color: hsl(120, 70%, 85%); border: 2px solid hsl(120, 70%, 65%); padding: 4px 8px; font-family: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;">Mike</span></p>
+				</section>
+
+				<section data-background-image="word_embedding_illustration.svg" data-background-size="contain">
 				</section>
 
 				<section>
@@ -111,6 +131,7 @@
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
 		<script>
 
 			// More info about initialization & config:
@@ -124,7 +145,7 @@
 				transition: 'slide',
 
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
 			});
 
 			// Listen for messages from embedded demos
