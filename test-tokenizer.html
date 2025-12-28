@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Tokenization</title>
+</head>
+<body>
+    <h1>Tokenization Test</h1>
+    <p>Testing tokenization of: "Mike is quick,"</p>
+    
+    <div id="result"></div>
+    
+    <script>
+        // Simple test to see how text gets tokenized
+        const text = "Mike is quick,";
+        document.getElementById('result').innerHTML = `
+            <p><strong>Text:</strong> "${text}"</p>
+            <p><strong>Characters:</strong> ${text.length}</p>
+            <p><strong>Words (split by space):</strong> ${text.split(' ').length}</p>
+            <p><strong>Note:</strong> Actual tokenization requires GPT-2 tokenizer</p>
+        `;
+    </script>
+</body>
+</html>
