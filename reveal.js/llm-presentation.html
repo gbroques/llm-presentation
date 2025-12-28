@@ -92,9 +92,96 @@
 					<p style="font-size: 1.8em;"><strong>Token ID</strong><span class="fragment" data-fragment-index="0"> — the position within the <span class="fragment highlight-red" data-fragment-index="1"><strong>token embedding matrix</strong></span></span></p>
 				</section>
 
+				<section data-transition="none">
+					<p style="font-size: 1.5em; margin-bottom: 30px;"><strong>GPT-2 Token Embedding Matrix</strong></p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{l}
+						\colorbox{white}{\scriptsize{0}} \text{ !} \\
+						\colorbox{white}{\scriptsize{1}} \text{ ''} \\
+						\colorbox{white}{\scriptsize{2}} \text{ \#} \\
+						\vdots \\
+						\colorbox{white}{\scriptsize{16073}} \colorbox{white}{\scriptsize{\text{ Mike}}} \\
+						\vdots \\
+						\colorbox{white}{\scriptsize{50256}} \scriptsize{\triangleleft\text{endoftext}\triangleright}
+						\end{array}
+						\begin{bmatrix}
+						[-0.11, & -0.04, & \phantom{-}0.03, & \ldots] \\
+						[\phantom{-}0.04, & -0.05, & \phantom{-}0.05, & \ldots] \\
+						[-0.13, & \phantom{-}0.05, & \phantom{-}0.18, & \ldots] \\
+						\vdots & \vdots & \vdots & \vdots \\
+						\colorbox{white}{[-0.05,} & \colorbox{white}{-0.04,} & \colorbox{white}{\phantom{-}0.22,} & \colorbox{white}{\ldots]} \\
+						\vdots & \vdots & \vdots & \vdots \\
+						[\phantom{-}0.05, & -0.03, & \phantom{-}0.05, & \ldots]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">50,257 tokens × 768 dimensions</p>
+					</div>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em; margin-bottom: 30px;"><strong>GPT-2 Token Embedding Matrix</strong></p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{l}
+						\colorbox{yellow}{\scriptsize{0}} \text{ !} \\
+						\colorbox{yellow}{\scriptsize{1}} \text{ ''} \\
+						\colorbox{yellow}{\scriptsize{2}} \text{ \#} \\
+						\vdots \\
+						\colorbox{yellow}{\scriptsize{16073}} \colorbox{white}{\scriptsize{\text{ Mike}}} \\
+						\vdots \\
+						\colorbox{yellow}{\scriptsize{50256}} \scriptsize{\triangleleft\text{endoftext}\triangleright}
+						\end{array}
+						\begin{bmatrix}
+						[-0.11, & -0.04, & \phantom{-}0.03, & \ldots] \\
+						[\phantom{-}0.04, & -0.05, & \phantom{-}0.05, & \ldots] \\
+						[-0.13, & \phantom{-}0.05, & \phantom{-}0.18, & \ldots] \\
+						\vdots & \vdots & \vdots & \vdots \\
+						\colorbox{white}{[-0.05,} & \colorbox{white}{-0.04,} & \colorbox{white}{\phantom{-}0.22,} & \colorbox{white}{\ldots]} \\
+						\vdots & \vdots & \vdots & \vdots \\
+						[\phantom{-}0.05, & -0.03, & \phantom{-}0.05, & \ldots]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;"><span style="background-color: yellow;">50,257 tokens</span> × 768 dimensions</p>
+					</div>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em; margin-bottom: 30px;"><strong>GPT-2 Token Embedding Matrix</strong></p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{l}
+						\colorbox{white}{\scriptsize{0}} \text{ !} \\
+						\colorbox{white}{\scriptsize{1}} \text{ ''} \\
+						\colorbox{white}{\scriptsize{2}} \text{ \#} \\
+						\vdots \\
+						\colorbox{lightgreen}{\scriptsize{16073}} \colorbox{lightgreen}{\scriptsize{\text{ Mike}}} \\
+						\vdots \\
+						\colorbox{white}{\scriptsize{50256}} \scriptsize{\triangleleft\text{endoftext}\triangleright}
+						\end{array}
+						\begin{bmatrix}
+						[-0.11, & -0.04, & \phantom{-}0.03, & \ldots] \\
+						[\phantom{-}0.04, & -0.05, & \phantom{-}0.05, & \ldots] \\
+						[-0.13, & \phantom{-}0.05, & \phantom{-}0.18, & \ldots] \\
+						\vdots & \vdots & \vdots & \vdots \\
+						\colorbox{lightgreen}{[-0.05,} & \colorbox{lightgreen}{-0.04,} & \colorbox{lightgreen}{\phantom{-}0.22,} & \colorbox{lightgreen}{\ldots]} \\
+						\vdots & \vdots & \vdots & \vdots \\
+						[\phantom{-}0.05, & -0.03, & \phantom{-}0.05, & \ldots]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">50,257 tokens × <span style="background-color: lightgreen;">768 dimensions</span></p>
+					</div>
+				</section>
+
 				<section>
-					<p style="font-size: 2em;">What is a <span class="fragment highlight-blue"><strong>token embedding</strong></span>?</p>
-					<p class="fragment highlight-blue" style="font-size: 3em;">🤔</p>
+					<div style="font-size: 1.5em;">
+						$$50{,}257 \times 768 = 38{,}597{,}376$$
+					</div>
+				</section>
+
+				<section>
+					<p style="font-size: 2em;">What is a <span class="fragment highlight-blue" data-fragment-index="0"><strong>token embedding</strong></span>?</p>
+					<p class="fragment" data-fragment-index="0" style="font-size: 3em;">🤔</p>
 				</section>
 
 				<section>
