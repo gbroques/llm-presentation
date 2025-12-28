@@ -2,7 +2,24 @@
 
 The following is an outline for a high-level presentation on understanding the internals of large language models (LLMs).
 
-## Presentation Structure
+## Part I - LLMs History & Motivation
+
+1. Word embeddings - [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (2013)
+2. Transformer architecture - Attention Is All You Need (2017)
+3. ChatGPT Launch GPT-3.5 (2022)
+    a. One of the fastest adoption curves in technlogical history.
+4. Why study GPT-2 (2019)?
+5. LLM Evolutionary Tree diagram
+  * Base is word embeddings like Word2Vec
+  * Pink Encoder-Only branch
+  * Green Encoder-Decoder branch
+  * Blue-gray Decoder-Only branch
+    + GPT-2 at base
+    + Claude is an ancestor
+6. Main differences between GPT-2 and GPT-3.5 are scale (in terms of both parameter count and training dataset) and training method (GPT-3.5 was additionally fine-tuned with RLHF).
+7. Anand claims understanding GPT-2 allows you to understand 80% of state-of-the-art models.
+
+## Part II - LLM Internals Overview
 
 1. LLMs as next-token predictors
   * Illustate how concatenating the next token prediction to the input sequence, and re-running the model with that as input can generate a full text sequence.
@@ -21,6 +38,10 @@ The following is an outline for a high-level presentation on understanding the i
 8. Attention
   * Motivate with a simple example such as "A mouse ran across the kitchen floor." vs. "My mouse stopped scrolling."
   * Show masked attention weights for an example sentence.
+
+## Part III - Attention
+
+The following is an outline of a deep-dive presentation on the attention mechanism within large language models.
 
 ## Development Tools
 
