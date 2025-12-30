@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+        let currentSlide = 0;
+        let animationProgress = 0;
+        let animating = false;
+        let animationDirection = 1; // 1 for forward, -1 for backward
+        
+        const totalSlides = 10; // Configurable number of transitions
+        
+        // Final positions from word_embeddings_2d.svg
+        const finalPositions = [
+            // Fruits cluster (red)
+            {x: 311, y: 86, label: "apple", color: [231, 76, 60], labelPos: "right"},
+            {x: 272, y: 80, label: "banana", color: [231, 76, 60], labelPos: "left"},
+            {x: 298, y: 99, label: "orange", color: [231, 76, 60], labelPos: "below"},
+            
+            // Countries cluster (blue)
+            {x: 95, y: 137, label: "italy", color: [52, 152, 219], labelPos: "above"},
+            {x: 80, y: 156, label: "france", color: [52, 152, 219], labelPos: "below"},
+            {x: 135, y: 165, label: "japan", color: [52, 152, 219], labelPos: "below"},
+            
+            // Emotions cluster (green)
+            {x: 284, y: 198, label: "happy", color: [39, 174, 96], labelPos: "left"},
+            {x: 320, y: 220, label: "sad", color: [39, 174, 96], labelPos: "below"},
+            {x: 297, y: 196, label: "angry", color: [39, 174, 96], labelPos: "above"}
+        ];
+        
+        // Random starting positions
+        let startPositions = [];
+        let currentPositions = [];
+        
+        function setup() {
+            let size = min(windowWidth, windowHeight);
+            createCanvas(size, size);
+            
+            // Set consistent random seed for reproducible starting positions
+            randomSeed(42);
+            
+            // Generate random starting positions with good spread
+            for (let i = 0; i < finalPositions.length; i++) {
+                let startPos = {
+                    x: random(70, 330), // Within the plot area
+                    y: random(70, 230),
+                    label: finalPositions[i].label,
+                    color: finalPositions[i].color,
+                    labelPos: finalPositions[i].labelPos
+                };
+                startPositions.push(startPos);
+                currentPositions.push({...startPos});
+            }
+            
+            drawVisualization();
+        }
+        
+        function keyPressed() {
+            handleKeyPress(key);
+        }
+        
+        // Listen for messages from parent window
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'keyPressed') {
+                handleKeyPress(event.data.key);
+            }
+        });
+        
+        function handleKeyPress(keyValue) {
+            if (keyValue === 'ArrowRight' && !animating) {
+                if (currentSlide < totalSlides) {
+                    currentSlide++;
+                    animating = true;
+                    animationProgress = 0;
+                    animationDirection = 1;
+                } else {
+                    // Demo is complete, let reveal.js handle the next slide
+                    window.parent.postMessage({type: 'demoComplete', direction: 'next'}, '*');
+                }
+            } else if (keyValue === 'ArrowLeft' && !animating) {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    animating = true;
+                    animationProgress = 0;
+                    animationDirection = -1;
+                } else {
+                    // At beginning, let reveal.js handle the previous slide
+                    window.parent.postMessage({type: 'demoComplete', direction: 'prev'}, '*');
+                }
+            }
+        }
+        
+        function draw() {
+            if (animating) {
+                animationProgress += 0.05; // Smooth animation speed
+                if (animationProgress >= 1) {
+                    animationProgress = 1;
+                    animating = false;
+                    updatePositions();
+                }
+            }
+            drawVisualization();
+        }
+        
+        function updatePositions() {
+            // Update current positions based on slide
+            let progress = currentSlide / totalSlides;
+            
+            for (let i = 0; i < currentPositions.length; i++) {
+                currentPositions[i].x = lerp(startPositions[i].x, finalPositions[i].x, progress);
+                currentPositions[i].y = lerp(startPositions[i].y, finalPositions[i].y, progress);
+            }
+        }
+        
+        function windowResized() {
+            let size = min(windowWidth, windowHeight);
+            resizeCanvas(size, size);
+            drawVisualization();
+        }
+        
+        function drawVisualization() {
+            background(255);
+            
+            // Scale factors
+            let scaleX = width / 400;
+            let scaleY = height / 300;
+            
+            // Draw axes
+            stroke(0);
+            strokeWeight(4);
+            line(50 * scaleX, 50 * scaleY, 50 * scaleX, 250 * scaleY);
+            line(50 * scaleX, 250 * scaleY, 350 * scaleX, 250 * scaleY);
+            
+            // Calculate positions for current frame
+            let displayPositions = [];
+            
+            if (animating) {
+                // Interpolate between current slide positions
+                let fromProgress = (currentSlide - animationDirection) / totalSlides;
+                let toProgress = currentSlide / totalSlides;
+                
+                if (animationDirection === -1) {
+                    // Going backward
+                    fromProgress = currentSlide / totalSlides;
+                    toProgress = (currentSlide + 1) / totalSlides;
+                }
+                
+                let frameProgress = animationDirection === 1 ? 
+                    lerp(fromProgress, toProgress, animationProgress) :
+                    lerp(fromProgress, toProgress, 1 - animationProgress);
+                
+                for (let i = 0; i < finalPositions.length; i++) {
+                    let pos = {
+                        x: lerp(startPositions[i].x, finalPositions[i].x, frameProgress) * scaleX,
+                        y: lerp(startPositions[i].y, finalPositions[i].y, frameProgress) * scaleY,
+                        label: finalPositions[i].label,
+                        color: finalPositions[i].color,
+                        labelPos: finalPositions[i].labelPos
+                    };
+                    displayPositions.push(pos);
+                }
+            } else {
+                // Static positions
+                let progress = currentSlide / totalSlides;
+                for (let i = 0; i < finalPositions.length; i++) {
+                    let pos = {
+                        x: lerp(startPositions[i].x, finalPositions[i].x, progress) * scaleX,
+                        y: lerp(startPositions[i].y, finalPositions[i].y, progress) * scaleY,
+                        label: finalPositions[i].label,
+                        color: finalPositions[i].color,
+                        labelPos: finalPositions[i].labelPos
+                    };
+                    displayPositions.push(pos);
+                }
+            }
+            
+            // Draw points and labels
+            textSize(16 * min(scaleX, scaleY));
+            for (let p of displayPositions) {
+                // Draw point
+                fill(p.color);
+                noStroke();
+                circle(p.x, p.y, 12 * min(scaleX, scaleY));
+                
+                // Draw label
+                fill(0);
+                textAlign(CENTER, CENTER);
+                let labelX = p.x;
+                let labelY = p.y;
+                let verticalOffset = 18 * min(scaleX, scaleY);
+                let horizontalOffset = 12 * min(scaleX, scaleY); // Slightly closer for horizontal labels
+                
+                switch(p.labelPos) {
+                    case "above":
+                        labelY -= verticalOffset;
+                        break;
+                    case "below":
+                        labelY += verticalOffset;
+                        break;
+                    case "left":
+                        textAlign(RIGHT, CENTER);
+                        labelX -= horizontalOffset;
+                        break;
+                    case "right":
+                        textAlign(LEFT, CENTER);
+                        labelX += horizontalOffset;
+                        break;
+                }
+                
+                text(p.label, labelX, labelY);
+            }
+            
+            // Draw progress indicator to the right of x-axis
+            fill(100);
+            textAlign(LEFT, CENTER);
+            textSize(14 * min(scaleX, scaleY));
+            text(`${currentSlide}/${totalSlides}`, 360 * scaleX, 250 * scaleY);
+        }
+    </script>
+</body>
+</html>
