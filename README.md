@@ -4,6 +4,14 @@ The following is an outline for a high-level presentation on understanding the i
 
 ## Part I - LLMs History & Motivation
 
+Timeline (from most recent to least recent):
+* 2025 - Agentic Development (e.g. Kiro, Claude Code)
+* 2022 - ChatGPT (GPT-3.5)
+* 2019 - GPT-2
+* 2018 - GPT-1
+* 2017 - Transformer architecture
+* 2013 - Word2vec (popularized word embeddings)
+
 1. Embeddings - Word embeddings popularized by [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (2013)
 2. Transformer architecture - Attention Is All You Need (2017)
 3. ChatGPT Launch GPT-3.5 (2022)
