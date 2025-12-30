@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Dot Product</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+</head>
+<body>
+    <script>
+        let greenVector = {x: 1, y: 0};
+        let purpleAngle = Math.PI / 4; // 45 degrees
+        let isDragging = false;
+        let isDraggingScale = false;
+        
+        function drawArrowhead(x, y, angle) {
+            push();
+            translate(x, y);
+            rotate(angle);
+            noStroke();
+            triangle(0, 0, -15, -5, -15, 5);
+            pop();
+        }
+        
+        function setup() {
+            createCanvas(600, 400);
+            
+            // Center the canvas horizontally
+            let canvas = document.querySelector('canvas');
+            canvas.style.display = 'block';
+            canvas.style.margin = '0 auto';
+        }
+        
+        function draw() {
+            background(255);
+            
+            // Center coordinates
+            let centerX = 150;
+            let centerY = 200;
+            let scale = 100;
+            
+            // Draw axes
+            stroke(0);
+            strokeWeight(2);
+            line(centerX - 120, centerY, centerX + 120, centerY); // x-axis
+            line(centerX, centerY - 120, centerX, centerY + 120); // y-axis
+            
+            // Calculate purple vector
+            let purpleVector = {
+                x: Math.cos(purpleAngle),
+                y: -Math.sin(purpleAngle) // negative for screen coordinates
+            };
+            
+            // Draw vectors with arrowheads
+            strokeWeight(4);
+            
+            // Green vector (fixed at 1,0)
+            stroke(34, 139, 34); // forestgreen
+            fill(34, 139, 34);
+            let greenEndX = centerX + greenVector.x * scale;
+            let greenEndY = centerY + greenVector.y * scale;
+            line(centerX, centerY, greenEndX - 10, greenEndY);
+            drawArrowhead(greenEndX, greenEndY, 0);
+            
+            // Purple vector
+            stroke(128, 0, 128); // purple
+            fill(128, 0, 128);
+            let purpleEndX = centerX + purpleVector.x * scale;
+            let purpleEndY = centerY + purpleVector.y * scale;
+            line(centerX, centerY, purpleEndX - 10 * Math.cos(Math.atan2(purpleVector.y, purpleVector.x)), purpleEndY - 10 * Math.sin(Math.atan2(purpleVector.y, purpleVector.x)));
+            drawArrowhead(purpleEndX, purpleEndY, Math.atan2(purpleVector.y, purpleVector.x));
+            
+            // Draw similarity scale
+            let scaleX = 400;
+            let scaleY = 50;
+            let scaleHeight = 300;
+            
+            // Gradient rectangle
+            for (let i = 0; i < scaleHeight; i++) {
+                let t = i / scaleHeight;
+                let r, g, b;
+                
+                if (t < 0.5) {
+                    // Red to white (top half)
+                    r = lerp(231, 255, t * 2);
+                    g = lerp(76, 255, t * 2);
+                    b = lerp(60, 255, t * 2);
+                } else {
+                    // White to blue (bottom half)
+                    r = lerp(255, 52, (t - 0.5) * 2);
+                    g = lerp(255, 152, (t - 0.5) * 2);
+                    b = lerp(255, 219, (t - 0.5) * 2);
+                }
+                
+                stroke(r, g, b);
+                strokeWeight(1);
+                line(scaleX, scaleY + i, scaleX + 40, scaleY + i);
+            }
+            
+            // Scale border
+            noFill();
+            stroke(0);
+            strokeWeight(2);
+            rect(scaleX, scaleY, 40, scaleHeight);
+            
+            // Labels
+            fill(0);
+            noStroke();
+            textAlign(CENTER);
+            textSize(16);
+            text("Similar", scaleX + 20, scaleY - 10);
+            text("Dissimilar", scaleX + 20, scaleY + scaleHeight + 20);
+            
+            // Scale markers
+            stroke(0);
+            strokeWeight(2);
+            line(scaleX - 5, scaleY, scaleX + 45, scaleY); // top (1)
+            line(scaleX - 5, scaleY + scaleHeight/2, scaleX + 45, scaleY + scaleHeight/2); // middle (0)
+            line(scaleX - 5, scaleY + scaleHeight, scaleX + 45, scaleY + scaleHeight); // bottom (-1)
+            
+            textAlign(LEFT);
+            textSize(12);
+            fill(0);
+            noStroke();
+            textStyle(NORMAL);
+            text("1", scaleX + 55, scaleY + 5);
+            text("0", scaleX + 55, scaleY + scaleHeight/2 + 5);
+            text("-1", scaleX + 55, scaleY + scaleHeight + 5);
+            
+            // Calculate and display dot product
+            let dotProduct = greenVector.x * purpleVector.x + greenVector.y * purpleVector.y;
+            
+            // Draw dot product line on scale
+            let lineY = scaleY + scaleHeight/2 - (dotProduct * scaleHeight/2);
+            stroke(0);
+            strokeWeight(3);
+            line(scaleX - 10, lineY, scaleX + 50, lineY);
+            
+            // Display dot product value next to the line
+            fill(0);
+            noStroke();
+            textAlign(RIGHT);
+            textSize(14);
+            textStyle(NORMAL);
+            text(dotProduct.toFixed(2), scaleX - 15, lineY + 5);
+        }
+        
+        function mousePressed() {
+            let centerX = 150;
+            let centerY = 200;
+            let scaleX = 400;
+            let scaleY = 50;
+            let scaleHeight = 300;
+            
+            // Check if clicking on the vector area
+            let dist = Math.sqrt((mouseX - centerX) ** 2 + (mouseY - centerY) ** 2);
+            if (dist < 150) {
+                isDragging = true;
+                return;
+            }
+            
+            // Check if clicking on the scale
+            if (mouseX >= scaleX - 10 && mouseX <= scaleX + 50 && 
+                mouseY >= scaleY && mouseY <= scaleY + scaleHeight) {
+                isDraggingScale = true;
+                updateAngleFromScale();
+            }
+        }
+        
+        function updateAngleFromScale() {
+            let scaleY = 50;
+            let scaleHeight = 300;
+            
+            // Convert click position to dot product value
+            let clickY = mouseY - scaleY;
+            let targetDotProduct = 1 - (clickY / scaleHeight) * 2; // Convert to -1 to 1 range
+            
+            // Calculate angle for this dot product (green vector is at 0 degrees)
+            // dot product = cos(angle) when both vectors have length 1
+            let targetAngle = Math.acos(Math.max(-1, Math.min(1, targetDotProduct)));
+            
+            // Keep the same quadrant preference (negative y for screen coordinates)
+            if (purpleAngle > Math.PI) {
+                targetAngle = 2 * Math.PI - targetAngle;
+            }
+            
+            purpleAngle = targetAngle;
+        }
+        
+        function mouseDragged() {
+            if (isDragging) {
+                let centerX = 150;
+                let centerY = 200;
+                purpleAngle = Math.atan2(-(mouseY - centerY), mouseX - centerX);
+            } else if (isDraggingScale) {
+                updateAngleFromScale();
+            }
+        }
+        
+        function mouseReleased() {
+            isDragging = false;
+            isDraggingScale = false;
+        }
+    </script>
+</body>
+</html>
