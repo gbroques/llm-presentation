@@ -73,6 +73,42 @@
 						$$
 						\begin{array}{l}
 						\text{france} \\
+						\phantom{\text{italy}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{bmatrix}
+						[\colorbox{white}{-0.31}, & \colorbox{white}{1.06}, & \ldots, & \colorbox{white}{-0.22}] \\
+						[\phantom{\colorbox{white}{\phantom{-}0.75}}, & \phantom{\colorbox{white}{0.47}}, & \phantom{\ldots}, & \phantom{\colorbox{white}{0.88}}] \\
+						[\phantom{\colorbox{white}{\phantom{-}0.14}}, & \phantom{\colorbox{white}{-0.25}}, & \phantom{\ldots}, & \phantom{\colorbox{white}{-0.39}}]
+						\end{bmatrix}
+						$$
+					</div>
+					<p style="visibility: hidden;">Columns or "features" are uninterpretable</p>
+				</section>
+
+				<section data-transition="none">
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{l}
+						\text{france} \\
+						\text{italy} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{bmatrix}
+						[\colorbox{white}{-0.31}, & \colorbox{white}{1.06}, & \ldots, & \colorbox{white}{-0.22}] \\
+						[\colorbox{white}{\phantom{-}0.75}, & \colorbox{white}{0.47}, & \ldots, & \colorbox{white}{0.88}] \\
+						[\phantom{\colorbox{white}{\phantom{-}0.14}}, & \phantom{\colorbox{white}{-0.25}}, & \phantom{\ldots}, & \phantom{\colorbox{white}{-0.39}}]
+						\end{bmatrix}
+						$$
+					</div>
+					<p style="visibility: hidden;">Columns or "features" are uninterpretable</p>
+				</section>
+
+				<section data-transition="none">
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{l}
+						\text{france} \\
 						\text{italy} \\
 						\text{japan}
 						\end{array}
@@ -222,6 +258,14 @@
 							Continent: 1=Europe, 2=Asia
 						</p>
 					</div>
+				</section>
+
+				<section>
+					<p style="font-size: 1.5em;">Embeddings are <strong class="fragment highlight-red" data-fragment-index="0">learned</strong> during training</p>
+					<p class="fragment" data-fragment-index="1" style="font-size: 1.5em;"><strong class="fragment highlight-blue" data-fragment-index="2">Similar</strong> words are <strong class="fragment highlight-blue" data-fragment-index="2">closer together</strong></p>
+				</section>
+
+				<section data-background-iframe="word_embeddings_animation.html" data-background-interactive>
 				</section>
 
 				<section>
@@ -445,6 +489,10 @@
 				</section>
 
 				<section>
+					<p style="font-size: 1.5em;">Relationships are directions in space</p>
+				</section>
+
+				<section>
 					<p style="font-size: 1.5em;">$$(\text{rome} - \text{italy}) + \text{france} \approx$$ <span style="border-bottom: 2px solid black; min-width: 60px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.2em;"><span class="fragment">paris</span></span></p>
 				</section>
 
@@ -524,11 +572,11 @@
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
 			});
 
-			// Direct keydown handler for vector arithmetic demo
+			// Direct keydown handler for interactive demos
 			document.addEventListener('keydown', function(event) {
 				let iframe = document.querySelector('.slide-background.present iframe');
 				
-				if (iframe && iframe.src.includes('vector_arithmetic.html')) {
+				if (iframe && (iframe.src.includes('vector_arithmetic.html') || iframe.src.includes('word_embeddings_animation.html'))) {
 					if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
 						event.preventDefault();
 						event.stopPropagation();
