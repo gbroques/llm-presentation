@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <main></main>
+    <script>
+        let currentSlide = 0;
+        let animationProgress = 0;
+        let animating = false;
+        let animationDirection = 1; // 1 for forward, -1 for backward
+        
+        function setup() {
+            let size = min(windowWidth, windowHeight);
+            createCanvas(size, size);
+            drawVisualization();
+        }
+        
+        function keyPressed() {
+            handleKeyPress(key);
+        }
+        
+        // Listen for messages from parent window
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'keyPressed') {
+                handleKeyPress(event.data.key);
+            }
+        });
+        
+        function handleKeyPress(keyValue) {
+            if (keyValue === 'ArrowRight' && !animating) {
+                if (currentSlide < 2) {
+                    currentSlide++;
+                    animating = true;
+                    animationProgress = 0;
+                    animationDirection = 1;
+                } else {
+                    // Demo is complete, let reveal.js handle the next slide
+                    window.parent.postMessage({type: 'demoComplete', direction: 'next'}, '*');
+                }
+            } else if (keyValue === 'ArrowLeft' && !animating) {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    animating = true;
+                    animationProgress = 0;
+                    animationDirection = -1;
+                } else {
+                    // At beginning, let reveal.js handle the previous slide
+                    window.parent.postMessage({type: 'demoComplete', direction: 'prev'}, '*');
+                }
+            }
+        }
+        
+        function draw() {
+            if (animating) {
+                animationProgress += 0.02;
+                if (animationProgress >= 1) {
+                    animationProgress = 1;
+                    animating = false;
+                }
+            }
+            drawVisualization();
+        }
+        
+        function windowResized() {
+            let size = min(windowWidth, windowHeight);
+            resizeCanvas(size, size);
+            drawVisualization();
+        }
+        
+        function drawVisualization() {
+            background(255);
+            
+            // Scale factors
+            let scaleX = width / 400;
+            let scaleY = height / 300;
+            
+            // Axes
+            stroke(0);
+            strokeWeight(4);
+            line(50 * scaleX, 50 * scaleY, 50 * scaleX, 250 * scaleY);
+            line(50 * scaleX, 250 * scaleY, 350 * scaleX, 250 * scaleY);
+            
+            // Points (scaled)
+            let paris = {x: 320 * scaleX, y: 117 * scaleY, label: "paris", color: [231, 76, 60], labelPos: "above"};
+            let france = {x: 257 * scaleX, y: 220 * scaleY, label: "france", color: [231, 76, 60], labelPos: "below"};
+            let italy = {x: 80 * scaleX, y: 194 * scaleY, label: "italy", color: [52, 152, 219], labelPos: "below"};
+            let rome = {x: 126 * scaleX, y: 80 * scaleY, label: "rome", color: [52, 152, 219], labelPos: "above"};
+            
+            let points = [paris, france, italy, rome];
+            
+            // Calculate the italy->rome vector
+            let vectorX = rome.x - italy.x;
+            let vectorY = rome.y - italy.y;
+            
+            // Draw arrow based on slide
+            stroke(0);
+            strokeWeight(4);
+            
+            if (currentSlide === 0) {
+                // Slide 0: no arrow, just points
+                if (animating && animationDirection === -1) {
+                    // Animate arrow disappearing (coming from slide 1)
+                    let progress = 1 - animationProgress;
+                    let endX = italy.x + vectorX * progress;
+                    let endY = italy.y + vectorY * progress;
+                    if (progress > 0.1) {
+                        drawArrow(italy.x, italy.y, endX, endY, 6 * min(scaleX, scaleY));
+                    }
+                }
+                // No arrow drawn when not animating
+            } else if (currentSlide === 1) {
+                // Slide 1: italy to rome (original vector)
+                if (animating) {
+                    if (animationDirection === 1) {
+                        // Coming from slide 0: animate arrow appearing
+                        let endX = italy.x + vectorX * animationProgress;
+                        let endY = italy.y + vectorY * animationProgress;
+                        if (animationProgress > 0.1) {
+                            drawArrow(italy.x, italy.y, endX, endY, 6 * min(scaleX, scaleY));
+                        }
+                    } else {
+                        // Coming from slide 2: animate vector sliding from france back to italy
+                        let progress = 1 - animationProgress;
+                        let startX = lerp(italy.x, france.x, progress);
+                        let startY = lerp(italy.y, france.y, progress);
+                        let endX = startX + vectorX;
+                        let endY = startY + vectorY;
+                        drawArrow(startX, startY, endX, endY, 6 * min(scaleX, scaleY));
+                    }
+                } else {
+                    drawArrow(italy.x, italy.y, rome.x, rome.y, 6 * min(scaleX, scaleY));
+                }
+            } else {
+                // Slide 2: same vector starting from france
+                if (animating && animationDirection === 1) {
+                    // Animate the vector sliding from italy to france
+                    let startX = lerp(italy.x, france.x, animationProgress);
+                    let startY = lerp(italy.y, france.y, animationProgress);
+                    let endX = startX + vectorX;
+                    let endY = startY + vectorY;
+                    drawArrow(startX, startY, endX, endY, 6 * min(scaleX, scaleY));
+                } else {
+                    // Same vector, but starting from france
+                    let endX = france.x + vectorX;
+                    let endY = france.y + vectorY;
+                    drawArrow(france.x, france.y, endX, endY, 6 * min(scaleX, scaleY));
+                }
+            }
+            
+            // Draw points and labels
+            textAlign(CENTER, CENTER);
+            textSize(16 * min(scaleX, scaleY));
+            for (let p of points) {
+                fill(p.color);
+                noStroke();
+                circle(p.x, p.y, 12 * min(scaleX, scaleY));
+                
+                fill(0);
+                let labelY = p.labelPos === "above" ? p.y - 20 * min(scaleX, scaleY) : p.y + 20 * min(scaleX, scaleY);
+                text(p.label, p.x, labelY);
+            }
+        }
+        
+        function drawArrow(x1, y1, x2, y2, radius) {
+            // Calculate vector
+            let dx = x2 - x1;
+            let dy = y2 - y1;
+            let len = sqrt(dx*dx + dy*dy);
+            
+            // Normalize
+            dx /= len;
+            dy /= len;
+            
+            // Calculate arrowhead size
+            let arrowSize = 15 * min(width/400, height/300);
+            
+            // Shorten line to stop at circle edge AND account for arrowhead
+            let endX = x2 - dx * (radius + arrowSize);
+            let endY = y2 - dy * (radius + arrowSize);
+            
+            // Draw line
+            line(x1, y1, endX, endY);
+            
+            // Draw arrowhead at the actual target point (minus radius)
+            let arrowX = x2 - dx * radius;
+            let arrowY = y2 - dy * radius;
+            
+            push();
+            translate(arrowX, arrowY);
+            rotate(atan2(dy, dx));
+            fill(0);
+            noStroke();
+            triangle(0, 0, -arrowSize, -arrowSize/2.5, -arrowSize, arrowSize/2.5);
+            pop();
+        }
+    </script>
+</body>
+</html>

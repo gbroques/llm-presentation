@@ -4,7 +4,7 @@ The following is an outline for a high-level presentation on understanding the i
 
 ## Part I - LLMs History & Motivation
 
-1. Word embeddings - [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (2013)
+1. Embeddings - Word embeddings popularized by [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (2013)
 2. Transformer architecture - Attention Is All You Need (2017)
 3. ChatGPT Launch GPT-3.5 (2022)
     a. One of the fastest adoption curves in technlogical history.
