@@ -7,32 +7,32 @@
   <line x1="50" y1="250" x2="350" y2="250" stroke="black" stroke-width="2"/>
   
   <!-- Fruits cluster (red) - PCA positioned -->
-  <circle cx="311" cy="86" r="5" fill="#e74c3c"/>
-  <text x="320" y="90" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="black">apple</text>
+  <circle cx="80" cy="213" r="5" fill="#e74c3c"/>
+  <text x="89" y="217" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="black">apple</text>
   
-  <circle cx="272" cy="80" r="5" fill="#e74c3c"/>
-  <text x="263" y="84" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="black">banana</text>
+  <circle cx="105" cy="220" r="5" fill="#e74c3c"/>
+  <text x="96" y="224" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="black">banana</text>
   
-  <circle cx="298" cy="99" r="5" fill="#e74c3c"/>
-  <text x="298" y="114" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">orange</text>
+  <circle cx="82" cy="198" r="5" fill="#e74c3c"/>
+  <text x="82" y="188" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">orange</text>
   
   <!-- Countries cluster (blue) - PCA positioned -->
-  <circle cx="107" cy="137" r="5" fill="#3498db"/>
-  <text x="107" y="127" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">canada</text>
+  <circle cx="293" cy="171" r="5" fill="#3498db"/>
+  <text x="293" y="161" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">italy</text>
   
-  <circle cx="80" cy="156" r="5" fill="#3498db"/>
-  <text x="80" y="171" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">france</text>
+  <circle cx="320" cy="162" r="5" fill="#3498db"/>
+  <text x="320" y="177" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">france</text>
   
-  <circle cx="125" cy="161" r="5" fill="#3498db"/>
-  <text x="125" y="176" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">japan</text>
+  <circle cx="248" cy="150" r="5" fill="#3498db"/>
+  <text x="248" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">japan</text>
   
   <!-- Emotions cluster (green) - PCA positioned -->
-  <circle cx="284" cy="198" r="5" fill="#27ae60"/>
-  <text x="275" y="202" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="black">happy</text>
+  <circle cx="122" cy="103" r="5" fill="#27ae60"/>
+  <text x="113" y="107" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="black">happy</text>
   
-  <circle cx="320" cy="220" r="5" fill="#27ae60"/>
-  <text x="320" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">sad</text>
+  <circle cx="101" cy="80" r="5" fill="#27ae60"/>
+  <text x="101" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">sad</text>
   
-  <circle cx="297" cy="196" r="5" fill="#27ae60"/>
-  <text x="297" y="186" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">angry</text>
+  <circle cx="114" cy="105" r="5" fill="#27ae60"/>
+  <text x="114" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">angry</text>
 </svg>
