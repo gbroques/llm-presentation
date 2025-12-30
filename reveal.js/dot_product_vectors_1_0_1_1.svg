@@ -1,0 +1,26 @@
+<svg width="300" height="100" xmlns="http://www.w3.org/2000/svg">
+  <!-- White background -->
+  <rect width="300" height="100" fill="white"/>
+  
+  <!-- Axes -->
+  <line x1="150" y1="70" x2="230" y2="70" stroke="black" stroke-width="2"/>
+  <line x1="150" y1="70" x2="150" y2="10" stroke="black" stroke-width="2"/>
+  
+  <!-- Vector [2,0] in forestgreen -->
+  <defs>
+    <marker id="arrowgreen" markerWidth="6" markerHeight="4" 
+     refX="4" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="forestgreen" />
+    </marker>
+  </defs>
+  <line x1="150" y1="70" x2="190" y2="70" stroke="forestgreen" stroke-width="3" marker-end="url(#arrowgreen)"/>
+  
+  <!-- Vector [1,1] in purple -->
+  <defs>
+    <marker id="arrowpurple" markerWidth="6" markerHeight="4" 
+     refX="4" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="purple" />
+    </marker>
+  </defs>
+  <line x1="150" y1="70" x2="190" y2="30" stroke="purple" stroke-width="3" marker-end="url(#arrowpurple)"/>
+</svg>
