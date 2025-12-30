@@ -12,6 +12,31 @@ Timeline (from most recent to least recent):
 * 2017 - Transformer architecture
 * 2013 - Word2vec (popularized word embeddings)
 
+TODO: Discuss embeddings more generally:
+* Digital media
+    + Text
+    + Images
+    + Audio
+    + Video
+* Structured data
+    + Rows in a spreadsheet or database
+* Sequential data
+    + Timeseries data
+    + Sensor data
+    + DNA - sequence of nucleotides (A, T, C, G)
+    + Proteins - sequence of amino acids
+* Relational / graph data
+    + Social networks
+    + Knowledge graphs
+    + Recommendation systems
+    + Molecules - atoms connected by chemical bonds
+* 3D models
+    + structured - vertices, edges, faces
+    + sequential - vertices, edges, faces can have an order
+    + relational - vertices, edges, and faces are connected
+
+* Create p5 word_emebbings.svg demo where the points start with random placement, then slowly move to end position over a series of frames.
+
 1. Embeddings - Word embeddings popularized by [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (2013)
 2. Transformer architecture - Attention Is All You Need (2017)
 3. ChatGPT Launch GPT-3.5 (2022)
