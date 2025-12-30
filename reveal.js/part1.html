@@ -20,6 +20,16 @@
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		
+		<!-- Custom KaTeX font override -->
+		<style>
+			.katex {
+				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+			}
+			.katex .mathdefault {
+				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -226,7 +236,7 @@
 				</section>
 
 				<section>
-					<p style="font-size: 1.5em;">$$(\text{rome} - \text{italy}) + \text{france} \approx$$ <span style="border-bottom: 2px solid black; min-width: 60px; display: inline-block; text-align: center; font-family: 'KaTeX_Main', 'Times New Roman', serif; font-size: 1.2em;"><span class="fragment">paris</span></span></p>
+					<p style="font-size: 1.5em;">$$(\text{rome} - \text{italy}) + \text{france} \approx$$ <span style="border-bottom: 2px solid black; min-width: 60px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.2em;"><span class="fragment">paris</span></span></p>
 				</section>
 
 				<section data-background-iframe="vector_arithmetic.html" data-background-interactive>
