@@ -58,14 +58,16 @@
 
 				<section data-transition="none">
 					<p style="font-size: 1.2em;">$$\underbrace{[-0.31, 1.06, -0.59, \ldots, -0.22]}_{\phantom{50 \text{ values}}}$$</p>
-					<p style="font-size: 1.5em; visibility: hidden;">encode the meaning for</p>
-					<p style="font-size: 2em; visibility: hidden;">france 🇫🇷</p>
+					<div style="visibility: hidden;">
+						<img src="france_flag_map.png" alt="Flag-map of France" style="width: 350px; height: auto;">
+					</div>
 				</section>
 
 				<section data-transition="none">
 					<p style="font-size: 1.2em;">$$\underbrace{[-0.31, 1.06, -0.59, \ldots, -0.22]}_{50 \text{ values}}$$</p>
-					<p class="fragment" style="font-size: 1.5em;">encode the meaning for</p>
-					<p class="fragment" style="font-size: 2em;">france 🇫🇷</p>
+					<div class="fragment">
+						<img src="france_flag_map.png" alt="Flag-map of France" style="width: 350px; height: auto;">
+					</div>
 				</section>
 
 				<section data-transition="none">
@@ -260,12 +262,10 @@
 					<p class="fragment" style="font-size: 2em;"><strong>Uninterpretable</strong></p>
 				</section>
 
-				<section>
-					<p style="font-size: 1.5em;">Embeddings are <strong class="fragment highlight-red" data-fragment-index="0">learned</strong> during training</p>
-					<p class="fragment" data-fragment-index="1" style="font-size: 1.5em;"><strong class="fragment highlight-blue" data-fragment-index="2">Similar</strong> words are <strong class="fragment highlight-blue" data-fragment-index="2">closer together</strong></p>
-				</section>
-
 				<section data-background-iframe="word_embeddings_animation.html" data-background-interactive>
+					<aside class="notes">
+						Embeddings are learned during training. Similar words are closer together.
+					</aside>
 				</section>
 
 				<section>
