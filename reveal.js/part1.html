@@ -101,6 +101,126 @@
 					<p class="fragment">Columns or "features" are <span class="fragment highlight-red"><strong>uninterpretable</strong></span></p>
 				</section>
 
+				<section data-transition="none">
+					<p style="font-size: 1.5em;">Feature engineering</p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{c}
+						\phantom{\text{canada}} \\
+						\phantom{\text{france}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{array}{ccc}
+						\phantom{\text{Population}} & \phantom{\text{Area (km²)}} & \phantom{\text{Continent}} \\
+						\end{array}
+						\\[-0.5em]
+						\begin{array}{l}
+						\text{canada} \\
+						\text{france} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{\phantom{1}38{,}000{,}000}, & \phantom{9{,}985{,}000}, & \phantom{\phantom{9{,}985{,}}1}] \\
+						[\phantom{\phantom{1}68{,}000{,}000}, & \phantom{\phantom{9{,}}664{,}000}, & \phantom{\phantom{9{,}985{,}}2}] \\
+						[\phantom{125{,}000{,}000}, & \phantom{\phantom{9{,}}378{,}000}, & \phantom{\phantom{9{,}985{,}}3}]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+							<span style="visibility: hidden;">Continent: 1=North America, 2=Europe, 3=Asia</span>
+						</p>
+					</div>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em;">Feature engineering</p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{c}
+						\phantom{\text{canada}} \\
+						\phantom{\text{france}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{array}{ccc}
+						\text{Population} & \phantom{\text{Area (km²)}} & \phantom{\text{Continent}} \\
+						\end{array}
+						\\[-0.5em]
+						\begin{array}{l}
+						\text{canada} \\
+						\text{france} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{1}38{,}000{,}000, & \phantom{9{,}985{,}000}, & \phantom{\phantom{9{,}985{,}}1}] \\
+						[\phantom{1}68{,}000{,}000, & \phantom{\phantom{9{,}}664{,}000}, & \phantom{\phantom{9{,}985{,}}2}] \\
+						[125{,}000{,}000, & \phantom{\phantom{9{,}}378{,}000}, & \phantom{\phantom{9{,}985{,}}3}]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+							<span style="visibility: hidden;">Continent: 1=North America, 2=Europe, 3=Asia</span>
+						</p>
+					</div>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em;">Feature engineering</p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{c}
+						\phantom{\text{canada}} \\
+						\phantom{\text{france}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{array}{ccc}
+						\text{Population} & \text{Area (km²)} & \phantom{\text{Continent}} \\
+						\end{array}
+						\\[-0.5em]
+						\begin{array}{l}
+						\text{canada} \\
+						\text{france} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{1}38{,}000{,}000, & 9{,}985{,}000, & \phantom{\phantom{9{,}985{,}}1}] \\
+						[\phantom{1}68{,}000{,}000, & \phantom{9{,}}664{,}000, & \phantom{\phantom{9{,}985{,}}2}] \\
+						[125{,}000{,}000, & \phantom{9{,}}378{,}000, & \phantom{\phantom{9{,}985{,}}3}]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+							<span style="visibility: hidden;">Continent: 1=North America, 2=Europe, 3=Asia</span>
+						</p>
+					</div>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em;">Feature engineering</p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{c}
+						\phantom{\text{canada}} \\
+						\phantom{\text{france}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{array}{ccc}
+						\text{Population} & \text{Area (km²)} & \text{Continent} \\
+						\end{array}
+						\\[-0.5em]
+						\begin{array}{l}
+						\text{canada} \\
+						\text{france} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{1}38{,}000{,}000, & 9{,}985{,}000, & \phantom{9{,}985{,}}1] \\
+						[\phantom{1}68{,}000{,}000, & \phantom{9{,}}664{,}000, & \phantom{9{,}985{,}}2] \\
+						[125{,}000{,}000, & \phantom{9{,}}378{,}000, & \phantom{9{,}985{,}}3]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+							Continent: 1=North America, 2=Europe, 3=Asia
+						</p>
+					</div>
+				</section>
+
 				<section>
 					<p style="font-size: 1.5em;">Relationships are directions in space</p>
 				</section>

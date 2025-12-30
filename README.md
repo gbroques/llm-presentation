@@ -38,6 +38,7 @@ TODO: Discuss embeddings more generally:
 * Create p5 word_emebbings.svg demo where the points start with random placement, then slowly move to end position over a series of frames.
 
 1. Embeddings - Word embeddings popularized by [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (2013)
+    a. Feature engineering slide with countries and 3 columns: population size, area (km^2), and continent.
 2. Transformer architecture - Attention Is All You Need (2017)
 3. ChatGPT Launch GPT-3.5 (2022)
     a. One of the fastest adoption curves in technlogical history.
