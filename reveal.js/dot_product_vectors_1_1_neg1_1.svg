@@ -3,8 +3,8 @@
   <rect width="300" height="100" fill="white"/>
   
   <!-- Axes -->
-  <line x1="150" y1="70" x2="230" y2="70" stroke="black" stroke-width="2"/>
-  <line x1="150" y1="70" x2="150" y2="10" stroke="black" stroke-width="2"/>
+  <line x1="150" y1="85" x2="230" y2="85" stroke="black" stroke-width="2"/>
+  <line x1="150" y1="85" x2="150" y2="15" stroke="black" stroke-width="2"/>
   
   <!-- Vector [1,1] in purple -->
   <defs>
@@ -13,7 +13,7 @@
       <polygon points="0 0, 6 2, 0 4" fill="purple" />
     </marker>
   </defs>
-  <line x1="150" y1="70" x2="190" y2="30" stroke="purple" stroke-width="3" marker-end="url(#arrowpurple)"/>
+  <line x1="150" y1="85" x2="190" y2="45" stroke="purple" stroke-width="3" marker-end="url(#arrowpurple)"/>
   
   <!-- Vector [-1,1] in forestgreen -->
   <defs>
@@ -22,5 +22,5 @@
       <polygon points="0 0, 6 2, 0 4" fill="forestgreen" />
     </marker>
   </defs>
-  <line x1="150" y1="70" x2="110" y2="30" stroke="forestgreen" stroke-width="3" marker-end="url(#arrowgreen)"/>
+  <line x1="150" y1="85" x2="110" y2="45" stroke="forestgreen" stroke-width="3" marker-end="url(#arrowgreen)"/>
 </svg>
