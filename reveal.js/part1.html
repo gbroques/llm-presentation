@@ -68,6 +68,162 @@
 					<p class="fragment" style="font-size: 2em;">france 🇫🇷</p>
 				</section>
 
+				<section data-transition="none">
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{l}
+						\text{france} \\
+						\text{italy} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\colorbox{white}{-0.31}, & \colorbox{white}{1.06}, & \ldots, & \colorbox{white}{-0.22}] \\
+						[\colorbox{white}{\phantom{-}0.75}, & \colorbox{white}{0.47}, & \ldots, & \colorbox{white}{0.88}] \\
+						[\colorbox{white}{\phantom{-}0.14}, & \colorbox{white}{-0.25}, & \ldots, & \colorbox{white}{-0.39}]
+						\end{bmatrix}
+						$$
+					</div>
+					<p style="visibility: hidden;">Columns or "features" are uninterpretable</p>
+				</section>
+
+				<section data-transition="none">
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{l}
+						\text{france} \\
+						\text{italy} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\colorbox{lightblue}{-0.31}, & \colorbox{lightgreen}{1.06}, & \ldots, & \colorbox{peachpuff}{-0.22}] \\
+						[\colorbox{lightblue}{\phantom{-}0.75}, & \colorbox{lightgreen}{0.47}, & \ldots, & \colorbox{peachpuff}{0.88}] \\
+						[\colorbox{lightblue}{\phantom{-}0.14}, & \colorbox{lightgreen}{-0.25}, & \ldots, & \colorbox{peachpuff}{-0.39}]
+						\end{bmatrix}
+						$$
+					</div>
+					<p class="fragment">Columns or "features" are <span class="fragment highlight-red"><strong>uninterpretable</strong></span></p>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em;">Feature engineering</p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{c}
+						\phantom{\text{france}} \\
+						\phantom{\text{italy}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{array}{ccc}
+						\phantom{\text{Population}} & \phantom{\text{Area (km²)}} & \phantom{\text{Continent}} \\
+						\end{array}
+						\\[-0.5em]
+						\begin{array}{l}
+						\text{france} \\
+						\text{italy} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{\phantom{1}68{,}000{,}000}, & \phantom{664{,}000}, & \phantom{\phantom{301{,}}1}] \\
+						[\phantom{\phantom{1}60{,}000{,}000}, & \phantom{301{,}000}, & \phantom{\phantom{301{,}}1}] \\
+						[\phantom{125{,}000{,}000}, & \phantom{378{,}000}, & \phantom{\phantom{301{,}}2}]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+							<span style="visibility: hidden;">Continent: 1=Europe, 2=Asia</span>
+						</p>
+					</div>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em;">Feature engineering</p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{c}
+						\phantom{\text{france}} \\
+						\phantom{\text{italy}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{array}{ccc}
+						\text{Population} & \phantom{\text{Area (km²)}} & \phantom{\text{Continent}} \\
+						\end{array}
+						\\[-0.5em]
+						\begin{array}{l}
+						\text{france} \\
+						\text{italy} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{1}68{,}000{,}000, & \phantom{664{,}000}, & \phantom{\phantom{301{,}}1}] \\
+						[\phantom{1}60{,}000{,}000, & \phantom{301{,}000}, & \phantom{\phantom{301{,}}1}] \\
+						[125{,}000{,}000, & \phantom{378{,}000}, & \phantom{\phantom{301{,}}2}]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+							<span style="visibility: hidden;">Continent: 1=Europe, 2=Asia</span>
+						</p>
+					</div>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em;">Feature engineering</p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{c}
+						\phantom{\text{france}} \\
+						\phantom{\text{italy}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{array}{ccc}
+						\text{Population} & \text{Area (km²)} & \phantom{\text{Continent}} \\
+						\end{array}
+						\\[-0.5em]
+						\begin{array}{l}
+						\text{france} \\
+						\text{italy} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{1}68{,}000{,}000, & 664{,}000, & \phantom{\phantom{301{,}}1}] \\
+						[\phantom{1}60{,}000{,}000, & 301{,}000, & \phantom{\phantom{301{,}}1}] \\
+						[125{,}000{,}000, & 378{,}000, & \phantom{\phantom{301{,}}2}]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+							<span style="visibility: hidden;">Continent: 1=Europe, 2=Asia</span>
+						</p>
+					</div>
+				</section>
+
+				<section data-transition="none">
+					<p style="font-size: 1.5em;">Feature engineering</p>
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{c}
+						\phantom{\text{france}} \\
+						\phantom{\text{italy}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{array}{ccc}
+						\text{Population} & \text{Area (km²)} & \text{Continent} \\
+						\end{array}
+						\\[-0.5em]
+						\begin{array}{l}
+						\text{france} \\
+						\text{italy} \\
+						\text{japan}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{1}68{,}000{,}000, & 664{,}000, & \phantom{301{,}}1] \\
+						[\phantom{1}60{,}000{,}000, & 301{,}000, & \phantom{301{,}}1] \\
+						[125{,}000{,}000, & 378{,}000, & \phantom{301{,}}2]
+						\end{bmatrix}
+						$$
+						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+							Continent: 1=Europe, 2=Asia
+						</p>
+					</div>
+				</section>
+
 				<section>
 					<p style="font-size: 1.5em;">How do we measure similarity?</p>
 					<p class="fragment" style="font-size: 3em;">🤔</p>
@@ -286,166 +442,6 @@
 				</section>
 
 				<section data-background-image="word_embeddings_2d.svg" data-background-size="contain">
-				</section>
-
-				<section data-transition="none">
-					<div style="font-size: 0.9em;">
-						$$
-						\begin{array}{l}
-						\text{france} \\
-						\text{italy} \\
-						\text{japan}
-						\end{array}
-						\begin{bmatrix}
-						[\colorbox{white}{-0.31}, & \colorbox{white}{1.06}, & \ldots, & \colorbox{white}{-0.22}] \\
-						[\colorbox{white}{\phantom{-}0.75}, & \colorbox{white}{0.47}, & \ldots, & \colorbox{white}{0.88}] \\
-						[\colorbox{white}{\phantom{-}0.14}, & \colorbox{white}{-0.25}, & \ldots, & \colorbox{white}{-0.39}]
-						\end{bmatrix}
-						$$
-					</div>
-					<p style="visibility: hidden;">Columns or "features" are uninterpretable</p>
-				</section>
-
-				<section data-transition="none">
-					<div style="font-size: 0.9em;">
-						$$
-						\begin{array}{l}
-						\text{france} \\
-						\text{italy} \\
-						\text{japan}
-						\end{array}
-						\begin{bmatrix}
-						[\colorbox{lightblue}{-0.31}, & \colorbox{lightgreen}{1.06}, & \ldots, & \colorbox{peachpuff}{-0.22}] \\
-						[\colorbox{lightblue}{\phantom{-}0.75}, & \colorbox{lightgreen}{0.47}, & \ldots, & \colorbox{peachpuff}{0.88}] \\
-						[\colorbox{lightblue}{\phantom{-}0.14}, & \colorbox{lightgreen}{-0.25}, & \ldots, & \colorbox{peachpuff}{-0.39}]
-						\end{bmatrix}
-						$$
-					</div>
-					<p class="fragment">Columns or "features" are <span class="fragment highlight-red"><strong>uninterpretable</strong></span></p>
-				</section>
-
-				<section data-transition="none">
-					<p style="font-size: 1.5em;">Feature engineering</p>
-					<div style="font-size: 0.9em;">
-						$$
-						\begin{array}{c}
-						\phantom{\text{france}} \\
-						\phantom{\text{italy}} \\
-						\phantom{\text{japan}}
-						\end{array}
-						\begin{array}{ccc}
-						\phantom{\text{Population}} & \phantom{\text{Area (km²)}} & \phantom{\text{Continent}} \\
-						\end{array}
-						\\[-0.5em]
-						\begin{array}{l}
-						\text{france} \\
-						\text{italy} \\
-						\text{japan}
-						\end{array}
-						\begin{bmatrix}
-						[\phantom{\phantom{1}68{,}000{,}000}, & \phantom{664{,}000}, & \phantom{\phantom{301{,}}1}] \\
-						[\phantom{\phantom{1}60{,}000{,}000}, & \phantom{301{,}000}, & \phantom{\phantom{301{,}}1}] \\
-						[\phantom{125{,}000{,}000}, & \phantom{378{,}000}, & \phantom{\phantom{301{,}}2}]
-						\end{bmatrix}
-						$$
-						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
-							<span style="visibility: hidden;">Continent: 1=Europe, 2=Asia</span>
-						</p>
-					</div>
-				</section>
-
-				<section data-transition="none">
-					<p style="font-size: 1.5em;">Feature engineering</p>
-					<div style="font-size: 0.9em;">
-						$$
-						\begin{array}{c}
-						\phantom{\text{france}} \\
-						\phantom{\text{italy}} \\
-						\phantom{\text{japan}}
-						\end{array}
-						\begin{array}{ccc}
-						\text{Population} & \phantom{\text{Area (km²)}} & \phantom{\text{Continent}} \\
-						\end{array}
-						\\[-0.5em]
-						\begin{array}{l}
-						\text{france} \\
-						\text{italy} \\
-						\text{japan}
-						\end{array}
-						\begin{bmatrix}
-						[\phantom{1}68{,}000{,}000, & \phantom{664{,}000}, & \phantom{\phantom{301{,}}1}] \\
-						[\phantom{1}60{,}000{,}000, & \phantom{301{,}000}, & \phantom{\phantom{301{,}}1}] \\
-						[125{,}000{,}000, & \phantom{378{,}000}, & \phantom{\phantom{301{,}}2}]
-						\end{bmatrix}
-						$$
-						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
-							<span style="visibility: hidden;">Continent: 1=Europe, 2=Asia</span>
-						</p>
-					</div>
-				</section>
-
-				<section data-transition="none">
-					<p style="font-size: 1.5em;">Feature engineering</p>
-					<div style="font-size: 0.9em;">
-						$$
-						\begin{array}{c}
-						\phantom{\text{france}} \\
-						\phantom{\text{italy}} \\
-						\phantom{\text{japan}}
-						\end{array}
-						\begin{array}{ccc}
-						\text{Population} & \text{Area (km²)} & \phantom{\text{Continent}} \\
-						\end{array}
-						\\[-0.5em]
-						\begin{array}{l}
-						\text{france} \\
-						\text{italy} \\
-						\text{japan}
-						\end{array}
-						\begin{bmatrix}
-						[\phantom{1}68{,}000{,}000, & 664{,}000, & \phantom{\phantom{301{,}}1}] \\
-						[\phantom{1}60{,}000{,}000, & 301{,}000, & \phantom{\phantom{301{,}}1}] \\
-						[125{,}000{,}000, & 378{,}000, & \phantom{\phantom{301{,}}2}]
-						\end{bmatrix}
-						$$
-						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
-							<span style="visibility: hidden;">Continent: 1=Europe, 2=Asia</span>
-						</p>
-					</div>
-				</section>
-
-				<section data-transition="none">
-					<p style="font-size: 1.5em;">Feature engineering</p>
-					<div style="font-size: 0.9em;">
-						$$
-						\begin{array}{c}
-						\phantom{\text{france}} \\
-						\phantom{\text{italy}} \\
-						\phantom{\text{japan}}
-						\end{array}
-						\begin{array}{ccc}
-						\text{Population} & \text{Area (km²)} & \text{Continent} \\
-						\end{array}
-						\\[-0.5em]
-						\begin{array}{l}
-						\text{france} \\
-						\text{italy} \\
-						\text{japan}
-						\end{array}
-						\begin{bmatrix}
-						[\phantom{1}68{,}000{,}000, & 664{,}000, & \phantom{301{,}}1] \\
-						[\phantom{1}60{,}000{,}000, & 301{,}000, & \phantom{301{,}}1] \\
-						[125{,}000{,}000, & 378{,}000, & \phantom{301{,}}2]
-						\end{bmatrix}
-						$$
-						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
-							Continent: 1=Europe, 2=Asia
-						</p>
-					</div>
-				</section>
-
-				<section>
-					<p style="font-size: 1.5em;">Relationships are directions in space</p>
 				</section>
 
 				<section>
