@@ -17,14 +17,14 @@
   <text x="298" y="114" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">orange</text>
   
   <!-- Countries cluster (blue) - PCA positioned -->
-  <circle cx="107" cy="137" r="5" fill="#3498db"/>
-  <text x="107" y="127" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">italy</text>
+  <circle cx="95" cy="137" r="5" fill="#3498db"/>
+  <text x="95" y="127" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">italy</text>
   
   <circle cx="80" cy="156" r="5" fill="#3498db"/>
   <text x="80" y="171" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">france</text>
   
-  <circle cx="125" cy="161" r="5" fill="#3498db"/>
-  <text x="125" y="176" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">japan</text>
+  <circle cx="135" cy="165" r="5" fill="#3498db"/>
+  <text x="135" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">japan</text>
   
   <!-- Emotions cluster (green) - PCA positioned -->
   <circle cx="284" cy="198" r="5" fill="#27ae60"/>
