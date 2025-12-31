@@ -16,7 +16,7 @@
             translate(x, y);
             rotate(angle);
             noStroke();
-            triangle(0, 0, -15, -5, -15, 5);
+            triangle(0, 0, -20, -8, -20, 8);
             pop();
         }
         
@@ -39,7 +39,7 @@
             
             // Draw axes
             stroke(0);
-            strokeWeight(2);
+            strokeWeight(4);
             line(centerX - 120, centerY, centerX + 120, centerY); // x-axis
             line(centerX, centerY - 120, centerX, centerY + 120); // y-axis
             
@@ -50,7 +50,7 @@
             };
             
             // Draw vectors with arrowheads
-            strokeWeight(4);
+            strokeWeight(6);
             
             // Green vector (fixed at 1,0)
             stroke(34, 139, 34); // forestgreen
@@ -67,6 +67,35 @@
             let purpleEndY = centerY + purpleVector.y * scale;
             line(centerX, centerY, purpleEndX - 10 * Math.cos(Math.atan2(purpleVector.y, purpleVector.x)), purpleEndY - 10 * Math.sin(Math.atan2(purpleVector.y, purpleVector.x)));
             drawArrowhead(purpleEndX, purpleEndY, Math.atan2(purpleVector.y, purpleVector.x));
+            
+            // Draw vertical line from purple arrowhead tip to x-axis (dashed)
+            stroke(128, 0, 128, 100); // purple with transparency
+            strokeWeight(3);
+            drawingContext.setLineDash([5, 7]);
+            line(purpleEndX, purpleEndY, purpleEndX, centerY);
+            drawingContext.setLineDash([]); // reset to solid
+            
+            // Draw horizontal line from origin to intersection point on x-axis (colored by dot product)
+            let currentDotProduct = greenVector.x * purpleVector.x + greenVector.y * purpleVector.y;
+            let t = (1 - currentDotProduct) / 2; // Convert from [-1,1] to [1,0] (inverted)
+            let r, g, b;
+            
+            if (t < 0.5) {
+                // Red to white (top half - positive dot product)
+                r = lerp(231, 255, t * 2);
+                g = lerp(76, 255, t * 2);
+                b = lerp(60, 255, t * 2);
+            } else {
+                // White to blue (bottom half - negative dot product)
+                r = lerp(255, 52, (t - 0.5) * 2);
+                g = lerp(255, 152, (t - 0.5) * 2);
+                b = lerp(255, 219, (t - 0.5) * 2);
+            }
+            
+            stroke(r, g, b);
+            strokeWeight(3);
+            drawingContext.setLineDash([]);
+            line(centerX, centerY, purpleEndX, centerY);
             
             // Draw similarity scale
             let scaleX = 400;
