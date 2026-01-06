@@ -33,10 +33,14 @@
   <!-- france·italy = 32.56 (y = 50 + (200-50) * (35-32.56)/35 = 60.4) -->
   <line x1="175" y1="60" x2="245" y2="60" stroke="black" stroke-width="4" />
   <line x1="175" y1="60" x2="245" y2="60" stroke="white" stroke-width="2" />
-  <text x="160" y="65" text-anchor="end" font-family="Source Sans Pro, sans-serif" font-size="24" fill="white">france <tspan font-weight="bold">∙</tspan> italy</text>
+  <text x="90" y="65" text-anchor="end" font-family="Source Sans Pro, sans-serif" font-size="24" fill="white">france</text>
+  <circle cx="100" cy="57" r="2.5" fill="white" />
+  <text x="110" y="65" text-anchor="start" font-family="Source Sans Pro, sans-serif" font-size="24" fill="white">italy</text>
   
   <!-- france·japan = 28.43 (y = 50 + (200-50) * (35-28.43)/35 = 78.2) -->
   <line x1="175" y1="78" x2="245" y2="78" stroke="black" stroke-width="4" />
   <line x1="175" y1="78" x2="245" y2="78" stroke="white" stroke-width="2" />
-  <text x="260" y="83" text-anchor="start" font-family="Source Sans Pro, sans-serif" font-size="24" fill="white">france <tspan font-weight="bold">∙</tspan> japan</text>
+  <text x="330" y="83" text-anchor="end" font-family="Source Sans Pro, sans-serif" font-size="24" fill="white">france</text>
+  <circle cx="340" cy="75" r="2.5" fill="white" />
+  <text x="350" y="83" text-anchor="start" font-family="Source Sans Pro, sans-serif" font-size="24" fill="white">japan</text>
 </svg>
