@@ -108,9 +108,17 @@
             
             let points = [paris, france, italy, rome];
             
+            // Circle visual radius (includes stroke)
+            let circleRadius = (6 * min(scaleX, scaleY)) + 1; // 6 is radius, +1 for full stroke width
+            
             // Calculate the italy->rome vector
             let vectorX = rome.x - italy.x;
             let vectorY = rome.y - italy.y;
+            let vectorLen = sqrt(vectorX*vectorX + vectorY*vectorY);
+            
+            // Calculate shortened vector (to rome's edge, not center)
+            let shortVectorX = vectorX - (vectorX/vectorLen) * circleRadius;
+            let shortVectorY = vectorY - (vectorY/vectorLen) * circleRadius;
             
             // Draw arrow based on slide
             stroke(0);
@@ -124,7 +132,7 @@
                     let endX = italy.x + vectorX * progress;
                     let endY = italy.y + vectorY * progress;
                     if (progress > 0.1) {
-                        drawArrow(italy.x, italy.y, endX, endY, 6 * min(scaleX, scaleY));
+                        drawArrow(italy.x, italy.y, endX, endY, circleRadius);
                     }
                 }
                 // No arrow drawn when not animating
@@ -133,22 +141,33 @@
                 if (animating) {
                     if (animationDirection === 1) {
                         // Coming from slide 0: animate arrow appearing
-                        let endX = italy.x + vectorX * animationProgress;
-                        let endY = italy.y + vectorY * animationProgress;
+                        let progress = animationProgress;
+                        let targetX = rome.x - (rome.x - italy.x) / sqrt((rome.x - italy.x)**2 + (rome.y - italy.y)**2) * circleRadius;
+                        let targetY = rome.y - (rome.y - italy.y) / sqrt((rome.x - italy.x)**2 + (rome.y - italy.y)**2) * circleRadius;
+                        let endX = italy.x + (targetX - italy.x) * progress;
+                        let endY = italy.y + (targetY - italy.y) * progress;
                         if (animationProgress > 0.1) {
-                            drawArrow(italy.x, italy.y, endX, endY, 6 * min(scaleX, scaleY));
+                            drawArrow(italy.x, italy.y, endX, endY, circleRadius);
                         }
                     } else {
                         // Coming from slide 2: animate vector sliding from france back to italy
                         let progress = 1 - animationProgress;
                         let startX = lerp(italy.x, france.x, progress);
                         let startY = lerp(italy.y, france.y, progress);
-                        let endX = startX + vectorX;
-                        let endY = startY + vectorY;
-                        drawArrow(startX, startY, endX, endY, 6 * min(scaleX, scaleY));
+                        let endX = startX + shortVectorX;
+                        let endY = startY + shortVectorY;
+                        drawArrow(startX, startY, endX, endY, circleRadius);
                     }
                 } else {
-                    drawArrow(italy.x, italy.y, rome.x, rome.y, 6 * min(scaleX, scaleY));
+                    // Static arrow from italy to rome's edge
+                    let dx = rome.x - italy.x;
+                    let dy = rome.y - italy.y;
+                    let len = sqrt(dx*dx + dy*dy);
+                    dx /= len;
+                    dy /= len;
+                    let targetX = rome.x - dx * circleRadius;
+                    let targetY = rome.y - dy * circleRadius;
+                    drawArrow(italy.x, italy.y, targetX, targetY, circleRadius);
                 }
             } else {
                 // Slide 2: same vector starting from france
@@ -156,14 +175,15 @@
                     // Animate the vector sliding from italy to france
                     let startX = lerp(italy.x, france.x, animationProgress);
                     let startY = lerp(italy.y, france.y, animationProgress);
-                    let endX = startX + vectorX;
-                    let endY = startY + vectorY;
-                    drawArrow(startX, startY, endX, endY, 6 * min(scaleX, scaleY));
+                    // Use shortened vector to maintain consistent length
+                    let endX = startX + shortVectorX;
+                    let endY = startY + shortVectorY;
+                    drawArrow(startX, startY, endX, endY, circleRadius);
                 } else {
-                    // Same vector, but starting from france
-                    let endX = france.x + vectorX;
-                    let endY = france.y + vectorY;
-                    drawArrow(france.x, france.y, endX, endY, 6 * min(scaleX, scaleY));
+                    // Same shortened vector, but starting from france
+                    let endX = france.x + shortVectorX;
+                    let endY = france.y + shortVectorY;
+                    drawArrow(france.x, france.y, endX, endY, circleRadius);
                 }
             }
             
@@ -191,6 +211,9 @@
             let dy = y2 - y1;
             let len = sqrt(dx*dx + dy*dy);
             
+            // If length is too short, don't draw
+            if (len < radius) return;
+            
             // Normalize
             dx /= len;
             dy /= len;
@@ -198,21 +221,22 @@
             // Calculate arrowhead size
             let arrowSize = 15 * min(width/400, height/300);
             
-            // Shorten line to stop at circle edge AND account for arrowhead
-            let endX = x2 - dx * (radius + arrowSize);
-            let endY = y2 - dy * (radius + arrowSize);
+            // Start line at edge of starting circle
+            let startX = x1 + dx * radius;
+            let startY = y1 + dy * radius;
             
-            // Draw line
+            // End line before arrowhead
+            let lineEndX = x2 - dx * arrowSize;
+            let lineEndY = y2 - dy * arrowSize;
+            
+            // Draw line from edge of starting circle
             stroke(255); // White line
             strokeWeight(3);
-            line(x1, y1, endX, endY);
+            line(startX, startY, lineEndX, lineEndY);
             
-            // Draw arrowhead at the actual target point (minus radius)
-            let arrowX = x2 - dx * radius;
-            let arrowY = y2 - dy * radius;
-            
+            // Draw arrowhead at x2, y2
             push();
-            translate(arrowX, arrowY);
+            translate(x2, y2);
             rotate(atan2(dy, dx));
             fill(255); // White arrows
             noStroke();
