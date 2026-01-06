@@ -1,26 +1,24 @@
 <svg width="300" height="100" xmlns="http://www.w3.org/2000/svg">
-  <!-- White background -->
-  <rect width="300" height="100" fill="white"/>
   
   <!-- Axes -->
-  <line x1="150" y1="85" x2="230" y2="85" stroke="black" stroke-width="2"/>
-  <line x1="150" y1="85" x2="150" y2="15" stroke="black" stroke-width="2"/>
+  <line x1="150" y1="85" x2="230" y2="85" stroke="white" stroke-width="2"/>
+  <line x1="150" y1="85" x2="150" y2="15" stroke="white" stroke-width="2"/>
   
-  <!-- Vector [2,0] in forestgreen -->
+  <!-- Vector [2,0] in ROYGBIV green -->
   <defs>
     <marker id="arrowgreen" markerWidth="6" markerHeight="4" 
      refX="4" refY="2" orient="auto">
-      <polygon points="0 0, 6 2, 0 4" fill="forestgreen" />
+      <polygon points="0 0, 6 2, 0 4" fill="#8DFF0A" />
     </marker>
   </defs>
-  <line x1="150" y1="85" x2="190" y2="85" stroke="forestgreen" stroke-width="3" marker-end="url(#arrowgreen)"/>
+  <line x1="150" y1="85" x2="190" y2="85" stroke="#8DFF0A" stroke-width="3" marker-end="url(#arrowgreen)"/>
   
-  <!-- Vector [1,1] in purple -->
+  <!-- Vector [1,1] in ROYGBIV violet -->
   <defs>
     <marker id="arrowpurple" markerWidth="6" markerHeight="4" 
      refX="4" refY="2" orient="auto">
-      <polygon points="0 0, 6 2, 0 4" fill="purple" />
+      <polygon points="0 0, 6 2, 0 4" fill="#F500EB" />
     </marker>
   </defs>
-  <line x1="150" y1="85" x2="190" y2="45" stroke="purple" stroke-width="3" marker-end="url(#arrowpurple)"/>
+  <line x1="150" y1="85" x2="190" y2="45" stroke="#F500EB" stroke-width="3" marker-end="url(#arrowpurple)"/>
 </svg>

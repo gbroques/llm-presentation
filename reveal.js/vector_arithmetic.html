@@ -28,6 +28,10 @@
         function setup() {
             let size = min(windowWidth, windowHeight);
             createCanvas(size, size);
+            
+            // Set square line caps for blocky appearance
+            drawingContext.lineCap = 'square';
+            
             drawVisualization();
         }
         
@@ -84,23 +88,23 @@
         }
         
         function drawVisualization() {
-            background(255);
+            background(25, 25, 25); // Dark background
             
             // Scale factors
             let scaleX = width / 400;
             let scaleY = height / 300;
             
             // Axes
-            stroke(0);
-            strokeWeight(4);
+            stroke(255); // White axes
+            strokeWeight(3);
             line(50 * scaleX, 50 * scaleY, 50 * scaleX, 250 * scaleY);
             line(50 * scaleX, 250 * scaleY, 350 * scaleX, 250 * scaleY);
             
-            // Points (scaled)
-            let paris = {x: 320 * scaleX, y: 117 * scaleY, label: "paris", color: [231, 76, 60], labelPos: "above"};
-            let france = {x: 257 * scaleX, y: 220 * scaleY, label: "france", color: [231, 76, 60], labelPos: "below"};
-            let italy = {x: 80 * scaleX, y: 194 * scaleY, label: "italy", color: [52, 152, 219], labelPos: "below"};
-            let rome = {x: 126 * scaleX, y: 80 * scaleY, label: "rome", color: [52, 152, 219], labelPos: "above"};
+            // Points (scaled) - Updated to ROYGBIV colors
+            let paris = {x: 320 * scaleX, y: 117 * scaleY, label: "paris", color: [255, 58, 6], labelPos: "above"};
+            let france = {x: 257 * scaleX, y: 220 * scaleY, label: "france", color: [255, 58, 6], labelPos: "below"};
+            let italy = {x: 80 * scaleX, y: 194 * scaleY, label: "italy", color: [12, 212, 255], labelPos: "below"};
+            let rome = {x: 126 * scaleX, y: 80 * scaleY, label: "rome", color: [12, 212, 255], labelPos: "above"};
             
             let points = [paris, france, italy, rome];
             
@@ -167,11 +171,15 @@
             textAlign(CENTER, CENTER);
             textSize(20 * min(scaleX, scaleY));
             for (let p of points) {
-                fill(p.color);
-                noStroke();
+                // Draw point with transparent fill and stroke (matching word embeddings style)
+                fill(p.color[0], p.color[1], p.color[2], 100); // Transparent fill
+                stroke(p.color); // Normal color stroke
+                strokeWeight(1); // 1px stroke
                 circle(p.x, p.y, 12 * min(scaleX, scaleY));
                 
-                fill(0);
+                // Draw label
+                fill(255); // White text
+                noStroke(); // Remove stroke from text
                 let labelY = p.labelPos === "above" ? p.y - 20 * min(scaleX, scaleY) : p.y + 20 * min(scaleX, scaleY);
                 text(p.label, p.x, labelY);
             }
@@ -195,6 +203,8 @@
             let endY = y2 - dy * (radius + arrowSize);
             
             // Draw line
+            stroke(255); // White line
+            strokeWeight(3);
             line(x1, y1, endX, endY);
             
             // Draw arrowhead at the actual target point (minus radius)
@@ -204,7 +214,7 @@
             push();
             translate(arrowX, arrowY);
             rotate(atan2(dy, dx));
-            fill(0);
+            fill(255); // White arrows
             noStroke();
             triangle(0, 0, -arrowSize, -arrowSize/2.5, -arrowSize, arrowSize/2.5);
             pop();

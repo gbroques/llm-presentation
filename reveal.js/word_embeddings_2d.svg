@@ -1,38 +1,38 @@
 <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-  <!-- White background -->
-  <rect width="400" height="300" fill="white"/>
+  <!-- Dark background -->
+  <rect width="400" height="300" fill="#191919"/>
   
   <!-- Axes -->
-  <line x1="50" y1="50" x2="50" y2="250" stroke="black" stroke-width="2"/>
-  <line x1="50" y1="250" x2="350" y2="250" stroke="black" stroke-width="2"/>
+  <line x1="50" y1="50" x2="50" y2="250" stroke="white" stroke-width="2"/>
+  <line x1="50" y1="250" x2="350" y2="250" stroke="white" stroke-width="2"/>
   
-  <!-- Fruits cluster (red) - PCA positioned -->
-  <circle cx="311" cy="86" r="5" fill="#e74c3c"/>
-  <text x="320" y="90" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="black">apple</text>
+  <!-- Fruits cluster (ROYGBIV red) - PCA positioned -->
+  <circle cx="311" cy="86" r="5" fill="#FF3A06"/>
+  <text x="320" y="90" text-anchor="start" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">apple</text>
   
-  <circle cx="272" cy="80" r="5" fill="#e74c3c"/>
-  <text x="263" y="84" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="black">banana</text>
+  <circle cx="272" cy="80" r="5" fill="#FF3A06"/>
+  <text x="263" y="84" text-anchor="end" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">banana</text>
   
-  <circle cx="298" cy="99" r="5" fill="#e74c3c"/>
-  <text x="298" y="114" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">orange</text>
+  <circle cx="298" cy="99" r="5" fill="#FF3A06"/>
+  <text x="298" y="114" text-anchor="middle" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">orange</text>
   
-  <!-- Countries cluster (blue) - PCA positioned -->
-  <circle cx="95" cy="137" r="5" fill="#3498db"/>
-  <text x="95" y="127" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">italy</text>
+  <!-- Countries cluster (ROYGBIV blue) - PCA positioned -->
+  <circle cx="95" cy="137" r="5" fill="#0CD4FF"/>
+  <text x="95" y="127" text-anchor="middle" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">italy</text>
   
-  <circle cx="80" cy="156" r="5" fill="#3498db"/>
-  <text x="80" y="171" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">france</text>
+  <circle cx="80" cy="156" r="5" fill="#0CD4FF"/>
+  <text x="80" y="171" text-anchor="middle" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">france</text>
   
-  <circle cx="135" cy="165" r="5" fill="#3498db"/>
-  <text x="135" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">japan</text>
+  <circle cx="135" cy="165" r="5" fill="#0CD4FF"/>
+  <text x="135" y="180" text-anchor="middle" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">japan</text>
   
-  <!-- Emotions cluster (green) - PCA positioned -->
-  <circle cx="284" cy="198" r="5" fill="#27ae60"/>
-  <text x="275" y="202" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="black">happy</text>
+  <!-- Emotions cluster (ROYGBIV green) - PCA positioned -->
+  <circle cx="284" cy="198" r="5" fill="#8DFF0A"/>
+  <text x="275" y="202" text-anchor="end" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">happy</text>
   
-  <circle cx="320" cy="220" r="5" fill="#27ae60"/>
-  <text x="320" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">sad</text>
+  <circle cx="320" cy="220" r="5" fill="#8DFF0A"/>
+  <text x="320" y="235" text-anchor="middle" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">sad</text>
   
-  <circle cx="297" cy="196" r="5" fill="#27ae60"/>
-  <text x="297" y="186" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="black">angry</text>
+  <circle cx="297" cy="196" r="5" fill="#8DFF0A"/>
+  <text x="297" y="186" text-anchor="middle" font-family="Source Sans Pro, sans-serif" font-size="12" fill="white">angry</text>
 </svg>

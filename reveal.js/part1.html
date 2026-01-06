@@ -16,7 +16,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -29,6 +29,27 @@
 			.katex .mathdefault {
 				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
 			}
+			
+			/* ROYGBIV Color Palette Variables */
+			:root {
+				--roygbiv-red: #FF3A06;
+				--roygbiv-orange: #FF8833;
+				--roygbiv-yellow: #FFEF06;
+				--roygbiv-green: #8DFF0A;
+				--roygbiv-blue: #0CD4FF;
+				--roygbiv-indigo: #8833FF;
+				--roygbiv-violet: #F500EB;
+			}
+			
+			/* Dynamic column highlighting for matrix numbers - formula: 3n-2 */
+      .katex .mtable .col-align-c:nth-child(1) .vlist-t .mord > .mord { background: var(--col1-bg, transparent) !important; } /* Column 1: 3(1)-2 = 1 */
+      .katex .mtable .col-align-c:nth-child(4) .vlist-t .mord > .mord { background: var(--col2-bg, transparent) !important; } /* Column 2: 3(2)-2 = 4 */
+      .katex .mtable .col-align-c:nth-child(10) .vlist-t .mord > .mord { background: var(--col4-bg, transparent) !important; } /* Column 4: 3(4)-2 = 10 */
+      
+      /* Add shadow only when background colors are set, but not for transparent text */
+      section[style*="--col1-bg"] .katex .mtable .col-align-c:nth-child(1) .vlist-t .mord > .mord:not([style*="transparent"]) { text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important; }
+      section[style*="--col2-bg"] .katex .mtable .col-align-c:nth-child(4) .vlist-t .mord > .mord:not([style*="transparent"]) { text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important; }
+      section[style*="--col4-bg"] .katex .mtable .col-align-c:nth-child(10) .vlist-t .mord > .mord:not([style*="transparent"]) { text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important; }
 		</style>
 	</head>
 
@@ -59,14 +80,14 @@
 				<section data-transition="none" data-auto-animate>
 					<p data-id="france-word-embedding" style="font-size: 1.2em;">$$[-0.31, 1.06, -0.59, \ldots, -0.22]$$</p>
 					<div style="visibility: hidden;">
-						<img src="france_flag_map.png" alt="Flag-map of France" style="width: 350px; height: auto;">
+						<img src="france_flag_map_white_border.png" alt="Flag-map of France" style="width: 350px; height: auto;">
 					</div>
 				</section>
 
 				<section data-transition="none" data-auto-animate>
 					<p data-id="france-word-embedding" style="font-size: 1.2em;">$$\underbrace{[-0.31, 1.06, -0.59, \ldots, -0.22]}_{50 \text{ dimensions}}$$</p>
 					<div class="fragment">
-						<img src="france_flag_map.png" alt="Flag-map of France" style="width: 350px; height: auto;">
+						<img src="france_flag_map_white_border.png" alt="Flag-map of France" style="width: 350px; height: auto;">
 					</div>
 				</section>
 
@@ -184,10 +205,28 @@
 						[125{,}000{,}000, & 378{,}000, & \phantom{301{,}}2]
 						\end{bmatrix}
 						$$
-						<p style="font-size: 0.8em; margin-top: 20px; color: #666;">
+						<p style="font-size: 0.8em; margin-top: 20px; color: #ccc;">
 							Continent: 1=Europe, 2=Asia
 						</p>
 					</div>
+				</section>
+
+				<section data-transition="none">
+					<div style="font-size: 0.9em;">
+						$$
+						\begin{array}{l}
+						\phantom{\text{france}} \\
+						\phantom{\text{italy}} \\
+						\phantom{\text{japan}}
+						\end{array}
+						\begin{bmatrix}
+						[\phantom{-0.31}, & \phantom{\phantom{-}1.06}, & \phantom{\ldots}, & \phantom{-0.22}] \\
+						[\phantom{\phantom{-}0.75}, & \phantom{\phantom{-}0.47}, & \phantom{\ldots}, & \phantom{\phantom{-}0.88}] \\
+						[\phantom{\phantom{-}0.14}, & \phantom{-0.25}, & \phantom{\ldots}, & \phantom{-0.39}]
+						\end{bmatrix}
+						$$
+					</div>
+					<p style="visibility: hidden; font-size: 2em;">Uninterpretable</p>
 				</section>
 
 				<section data-transition="none">
@@ -199,9 +238,9 @@
 						\phantom{\text{japan}}
 						\end{array}
 						\begin{bmatrix}
-						[\colorbox{white}{-0.31}, & \colorbox{white}{\phantom{-}1.06}, & \ldots, & \colorbox{white}{-0.22}] \\
-						[\phantom{\colorbox{white}{\phantom{-}0.75}}, & \phantom{\colorbox{white}{\phantom{-}0.47}}, & \phantom{\ldots}, & \phantom{\colorbox{white}{\phantom{-}0.88}}] \\
-						[\phantom{\colorbox{white}{\phantom{-}0.14}}, & \phantom{\colorbox{white}{-0.25}}, & \phantom{\ldots}, & \phantom{\colorbox{white}{-0.39}}]
+						[-0.31, & \phantom{-}1.06, & \ldots, & -0.22] \\
+						[\phantom{\phantom{-}0.75}, & \phantom{\phantom{-}0.47}, & \phantom{\ldots}, & \phantom{\phantom{-}0.88}] \\
+						[\phantom{\phantom{-}0.14}, & \phantom{-0.25}, & \phantom{\ldots}, & \phantom{-0.39}]
 						\end{bmatrix}
 						$$
 					</div>
@@ -217,9 +256,9 @@
 						\phantom{\text{japan}}
 						\end{array}
 						\begin{bmatrix}
-						[\colorbox{white}{-0.31}, & \colorbox{white}{\phantom{-}1.06}, & \ldots, & \colorbox{white}{-0.22}] \\
-						[\colorbox{white}{\phantom{-}0.75}, & \colorbox{white}{\phantom{-}0.47}, & \ldots, & \colorbox{white}{\phantom{-}0.88}] \\
-						[\phantom{\colorbox{white}{\phantom{-}0.14}}, & \phantom{\colorbox{white}{-0.25}}, & \phantom{\ldots}, & \phantom{\colorbox{white}{-0.39}}]
+						[-0.31, & \phantom{-}1.06, & \ldots, & -0.22] \\
+						[\phantom{-}0.75, & \phantom{-}0.47, & \ldots, & \phantom{-}0.88] \\
+						[\phantom{\phantom{-}0.14}, & \phantom{-0.25}, & \phantom{\ldots}, & \phantom{-0.39}]
 						\end{bmatrix}
 						$$
 					</div>
@@ -235,16 +274,16 @@
 						\text{japan}
 						\end{array}
 						\begin{bmatrix}
-						[\colorbox{white}{-0.31}, & \colorbox{white}{\phantom{-}1.06}, & \ldots, & \colorbox{white}{-0.22}] \\
-						[\colorbox{white}{\phantom{-}0.75}, & \colorbox{white}{\phantom{-}0.47}, & \ldots, & \colorbox{white}{\phantom{-}0.88}] \\
-						[\colorbox{white}{\phantom{-}0.14}, & \colorbox{white}{-0.25}, & \ldots, & \colorbox{white}{-0.39}]
+						[-0.31, & \phantom{-}1.06, & \ldots, & -0.22] \\
+						[\phantom{-}0.75, & \phantom{-}0.47, & \ldots, & \phantom{-}0.88] \\
+						[\phantom{-}0.14, & -0.25, & \ldots, & -0.39]
 						\end{bmatrix}
 						$$
 					</div>
 					<p style="visibility: hidden; font-size: 2em;">Uninterpretable</p>
 				</section>
 
-				<section data-transition="none">
+				<section data-transition="none" style="--col1-bg: var(--roygbiv-red); --col2-bg: var(--roygbiv-green); --col4-bg: var(--roygbiv-blue);">
 					<div style="font-size: 0.9em;">
 						$$
 						\begin{array}{l}
@@ -253,9 +292,9 @@
 						\text{japan}
 						\end{array}
 						\begin{bmatrix}
-						[\colorbox{lightblue}{-0.31}, & \colorbox{lightgreen}{\phantom{-}1.06}, & \ldots, & \colorbox{peachpuff}{-0.22}] \\
-						[\colorbox{lightblue}{\phantom{-}0.75}, & \colorbox{lightgreen}{\phantom{-}0.47}, & \ldots, & \colorbox{peachpuff}{\phantom{-}0.88}] \\
-						[\colorbox{lightblue}{\phantom{-}0.14}, & \colorbox{lightgreen}{-0.25}, & \ldots, & \colorbox{peachpuff}{-0.39}]
+						[-0.31, & \phantom{-}1.06, & \ldots, & -0.22] \\
+						[\phantom{-}0.75, & \phantom{-}0.47, & \ldots, & \phantom{-}0.88] \\
+						[\phantom{-}0.14, & -0.25, & \ldots, & -0.39]
 						\end{bmatrix}
 						$$
 					</div>
@@ -276,10 +315,10 @@
 				<section>
 					<p style="font-size: 1.5em;">Dot product</p>
 					<div class="fragment">
-						<p style="font-size: 1.2em;">$$\color{black}{a} = \color{black}{\langle} \color{navy}{a_1}\color{black}{,\,} \color{orange}{a_2} \color{black}{\rangle} \quad \color{black}{b} = \color{black}{\langle} \color{navy}{b_1}\color{black}{,\,} \color{orange}{b_2} \color{black}{\rangle}$$</p>
+						<p style="font-size: 1.2em;">$$\color{white}{a} = \color{white}{\langle} \color{#0CD4FF}{a_1}\color{white}{,\,} \color{#FF8833}{a_2} \color{white}{\rangle} \quad \color{white}{b} = \color{white}{\langle} \color{#0CD4FF}{b_1}\color{white}{,\,} \color{#FF8833}{b_2} \color{white}{\rangle}$$</p>
 					</div>
 					<div class="fragment">
-						<p style="font-size: 1.2em;">$$\color{black}{a} \cdot \color{black}{b} = \color{navy}{a_1} \color{navy}{b_1} \color{black}{\, + \,} \color{orange}{a_2} \color{orange}{b_2}$$</p>
+						<p style="font-size: 1.2em;">$$\color{white}{a} \cdot \color{white}{b} = \color{#0CD4FF}{a_1} \color{#0CD4FF}{b_1} \color{white}{\, + \,} \color{#FF8833}{a_2} \color{#FF8833}{b_2}$$</p>
 					</div>
 					<aside class="notes">
 						Sum of the element-wise products
@@ -302,9 +341,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\phantom{\begin{bmatrix} \color{forestgreen}{1} \\ \color{forestgreen}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{purple}{1} \\ \color{purple}{1} \end{bmatrix} = \phantom{\color{forestgreen}{1} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{+}\, \color{forestgreen}{0} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{=}\, 1}}$$
+							$$\phantom{\begin{bmatrix} \color{#8DFF0A}{1} \\ \color{#8DFF0A}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{#F500EB}{1} \\ \color{#F500EB}{1} \end{bmatrix} = \phantom{\color{#8DFF0A}{1} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{+}\, \color{#8DFF0A}{0} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{=}\, 1}}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
 					</div>
 				</section>
 
@@ -312,9 +351,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{forestgreen}{1} \\ \color{forestgreen}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{purple}{1} \\ \color{purple}{1} \end{bmatrix} = \phantom{\color{forestgreen}{1} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{+}\, \color{forestgreen}{0} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{=}\, 1}$$
+							$$\begin{bmatrix} \color{#8DFF0A}{1} \\ \color{#8DFF0A}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{#F500EB}{1} \\ \color{#F500EB}{1} \end{bmatrix} = \phantom{\color{#8DFF0A}{1} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{+}\, \color{#8DFF0A}{0} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{=}\, 1}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
 					</div>
 				</section>
 
@@ -322,9 +361,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{1} \\ \color{orange}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \phantom{\color{navy}{1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{0} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, 1}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \phantom{\color{#0CD4FF}{1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{0} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, 1}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
 					</div>
 				</section>
 
@@ -332,9 +371,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{1} \\ \color{orange}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{1} \,\color{black}{\cdot}\, \color{navy}{1} \phantom{\,\color{black}{+}\, \color{orange}{0} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, 1}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \phantom{\,\color{white}{+}\, \color{#FF8833}{0} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, 1}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
 					</div>
 				</section>
 
@@ -342,9 +381,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{1} \\ \color{orange}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{0} \,\color{black}{\cdot}\, \color{orange}{1} \phantom{\,\color{black}{=}\, 1}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{0} \,\color{white}{\cdot}\, \color{#FF8833}{1} \phantom{\,\color{white}{=}\, 1}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Similar</span>
 					</div>
 				</section>
 
@@ -352,9 +391,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{1} \\ \color{orange}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{0} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, 1$$
+							$$\begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{0} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{0} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, 1$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em;"><span class="fragment">Similar</span></span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 70px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em;"><span class="fragment">Similar</span></span>
 					</div>
 				</section>
 
@@ -362,9 +401,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_neg1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\phantom{\begin{bmatrix} \color{forestgreen}{-1} \\ \color{forestgreen}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{purple}{1} \\ \color{purple}{1} \end{bmatrix} = \phantom{\color{forestgreen}{-1} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{+}\, \color{forestgreen}{0} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{=}\, -1}}$$
+							$$\phantom{\begin{bmatrix} \color{#8DFF0A}{-1} \\ \color{#8DFF0A}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{#F500EB}{1} \\ \color{#F500EB}{1} \end{bmatrix} = \phantom{\color{#8DFF0A}{-1} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{+}\, \color{#8DFF0A}{0} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{=}\, -1}}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
 					</div>
 				</section>
 
@@ -372,9 +411,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_neg1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{forestgreen}{-1} \\ \color{forestgreen}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{purple}{1} \\ \color{purple}{1} \end{bmatrix} = \phantom{\color{forestgreen}{-1} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{+}\, \color{forestgreen}{0} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{=}\, -1}$$
+							$$\begin{bmatrix} \color{#8DFF0A}{-1} \\ \color{#8DFF0A}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{#F500EB}{1} \\ \color{#F500EB}{1} \end{bmatrix} = \phantom{\color{#8DFF0A}{-1} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{+}\, \color{#8DFF0A}{0} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{=}\, -1}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
 					</div>
 				</section>
 
@@ -382,9 +421,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_neg1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{-1} \\ \color{orange}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \phantom{\color{navy}{-1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{0} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, -1}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{-1} \\ \color{#FF8833}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \phantom{\color{#0CD4FF}{-1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{0} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, -1}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
 					</div>
 				</section>
 
@@ -392,9 +431,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_neg1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{-1} \\ \color{orange}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{-1} \,\color{black}{\cdot}\, \color{navy}{1} \phantom{\,\color{black}{+}\, \color{orange}{0} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, -1}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{-1} \\ \color{#FF8833}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{-1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \phantom{\,\color{white}{+}\, \color{#FF8833}{0} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, -1}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
 					</div>
 				</section>
 
@@ -402,9 +441,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_neg1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{-1} \\ \color{orange}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{-1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{0} \,\color{black}{\cdot}\, \color{orange}{1} \phantom{\,\color{black}{=}\, -1}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{-1} \\ \color{#FF8833}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{-1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{0} \,\color{white}{\cdot}\, \color{#FF8833}{1} \phantom{\,\color{white}{=}\, -1}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Dissimilar</span>
 					</div>
 				</section>
 
@@ -412,9 +451,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_neg1_0_1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{-1} \\ \color{orange}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{-1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{0} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, -1$$
+							$$\begin{bmatrix} \color{#0CD4FF}{-1} \\ \color{#FF8833}{\phantom{-}0} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{-1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{0} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, -1$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em;"><span class="fragment">Dissimilar</span></span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 100px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em;"><span class="fragment">Dissimilar</span></span>
 					</div>
 				</section>
 
@@ -422,9 +461,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_1_neg1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\phantom{\begin{bmatrix} \color{forestgreen}{-1} \\ \color{forestgreen}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{purple}{1} \\ \color{purple}{1} \end{bmatrix} = \phantom{\color{forestgreen}{-1} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{+}\, \color{forestgreen}{1} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{=}\, 0}}$$
+							$$\phantom{\begin{bmatrix} \color{#8DFF0A}{-1} \\ \color{#8DFF0A}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{#F500EB}{1} \\ \color{#F500EB}{1} \end{bmatrix} = \phantom{\color{#8DFF0A}{-1} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{+}\, \color{#8DFF0A}{1} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{=}\, 0}}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
 					</div>
 				</section>
 
@@ -432,9 +471,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_1_neg1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{forestgreen}{-1} \\ \color{forestgreen}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{purple}{1} \\ \color{purple}{1} \end{bmatrix} = \phantom{\color{forestgreen}{-1} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{+}\, \color{forestgreen}{1} \,\color{black}{\cdot}\, \color{purple}{1} \,\color{black}{=}\, 0}$$
+							$$\begin{bmatrix} \color{#8DFF0A}{-1} \\ \color{#8DFF0A}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{#F500EB}{1} \\ \color{#F500EB}{1} \end{bmatrix} = \phantom{\color{#8DFF0A}{-1} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{+}\, \color{#8DFF0A}{1} \,\color{white}{\cdot}\, \color{#F500EB}{1} \,\color{white}{=}\, 0}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
 					</div>
 				</section>
 
@@ -442,9 +481,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_1_neg1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{-1} \\ \color{orange}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \phantom{\color{navy}{-1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{1} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, 0}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{-1} \\ \color{#FF8833}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \phantom{\color{#0CD4FF}{-1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{1} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, 0}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
 					</div>
 				</section>
 
@@ -452,9 +491,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_1_neg1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{-1} \\ \color{orange}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{-1} \,\color{black}{\cdot}\, \color{navy}{1} \phantom{\,\color{black}{+}\, \color{orange}{1} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, 0}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{-1} \\ \color{#FF8833}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{-1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \phantom{\,\color{white}{+}\, \color{#FF8833}{1} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, 0}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
 					</div>
 				</section>
 
@@ -462,9 +501,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_1_neg1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{-1} \\ \color{orange}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{-1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{1} \,\color{black}{\cdot}\, \color{orange}{1} \phantom{\,\color{black}{=}\, 0}$$
+							$$\begin{bmatrix} \color{#0CD4FF}{-1} \\ \color{#FF8833}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{-1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{1} \,\color{white}{\cdot}\, \color{#FF8833}{1} \phantom{\,\color{white}{=}\, 0}$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em; visibility: hidden;">Unrelated</span>
 					</div>
 				</section>
 
@@ -472,9 +511,9 @@
 					<div style="display: flex; flex-direction: column; align-items: center; gap: 0px;">
 						<img src="dot_product_vectors_1_1_neg1_1.svg" style="width: 650px; height: 217px;">
 						<div style="font-size: 1.2em;">
-							$$\begin{bmatrix} \color{navy}{-1} \\ \color{orange}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{navy}{1} \\ \color{orange}{1} \end{bmatrix} = \color{navy}{-1} \,\color{black}{\cdot}\, \color{navy}{1} \,\color{black}{+}\, \color{orange}{1} \,\color{black}{\cdot}\, \color{orange}{1} \,\color{black}{=}\, 0$$
+							$$\begin{bmatrix} \color{#0CD4FF}{-1} \\ \color{#FF8833}{\phantom{-}1} \end{bmatrix} \cdot \begin{bmatrix} \color{#0CD4FF}{1} \\ \color{#FF8833}{1} \end{bmatrix} = \color{#0CD4FF}{-1} \,\color{white}{\cdot}\, \color{#0CD4FF}{1} \,\color{white}{+}\, \color{#FF8833}{1} \,\color{white}{\cdot}\, \color{#FF8833}{1} \,\color{white}{=}\, 0$$
 						</div>
-						<span style="border-bottom: 2px solid black; min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em;"><span class="fragment">Unrelated</span></span>
+						<span style="border-bottom: 4px solid var(--r-main-color); min-width: 90px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.5em;"><span class="fragment">Unrelated</span></span>
 					</div>
 				</section>
 
@@ -502,7 +541,7 @@
 				</section>
 
 				<section>
-					<p style="font-size: 1.5em;">$$(\text{rome} - \text{italy}) + \text{france} \approx$$ <span style="border-bottom: 2px solid black; min-width: 60px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.2em;"><span class="fragment">paris</span></span></p>
+					<p style="font-size: 1.5em;">$$(\text{rome} - \text{italy}) + \text{france} \approx$$ <span style="border-bottom: 4px solid var(--r-main-color); min-width: 60px; display: inline-block; text-align: center; font-family: 'Source Sans Pro', Helvetica, sans-serif; font-size: 1.2em;"><span class="fragment">paris</span></span></p>
 				</section>
 
 				<section data-background-iframe="vector_arithmetic.html" data-background-interactive>

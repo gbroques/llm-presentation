@@ -3,6 +3,18 @@
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <style>
+        :root {
+            --r-background-color: #191919;
+            --r-main-color: #fff;
+            --roygbiv-red: #FF3A06;
+            --roygbiv-orange: #FF8833;
+            --roygbiv-yellow: #FFEF06;
+            --roygbiv-green: #8DFF0A;
+            --roygbiv-blue: #0CD4FF;
+            --roygbiv-indigo: #8833FF;
+            --roygbiv-violet: #F500EB;
+        }
+        
         body {
             margin: 0;
             padding: 0;
@@ -10,6 +22,8 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background-color: var(--r-background-color);
+            color: var(--r-main-color);
         }
         main {
             display: flex;
@@ -30,19 +44,19 @@
         // Final positions from word_embeddings_2d.svg
         const finalPositions = [
             // Fruits cluster (red)
-            {x: 311, y: 86, label: "apple", color: [231, 76, 60], labelPos: "right"},
-            {x: 272, y: 80, label: "banana", color: [231, 76, 60], labelPos: "left"},
-            {x: 298, y: 99, label: "orange", color: [231, 76, 60], labelPos: "below"},
+            {x: 311, y: 86, label: "apple", color: [255, 58, 6], stroke: [255, 102, 51], labelPos: "right"},
+            {x: 272, y: 80, label: "banana", color: [255, 58, 6], stroke: [255, 102, 51], labelPos: "left"},
+            {x: 298, y: 99, label: "orange", color: [255, 58, 6], stroke: [255, 102, 51], labelPos: "below"},
             
             // Countries cluster (blue)
-            {x: 95, y: 137, label: "italy", color: [52, 152, 219], labelPos: "above"},
-            {x: 80, y: 156, label: "france", color: [52, 152, 219], labelPos: "below"},
-            {x: 135, y: 165, label: "japan", color: [52, 152, 219], labelPos: "below"},
+            {x: 95, y: 137, label: "italy", color: [12, 212, 255], stroke: [77, 225, 255], labelPos: "above"},
+            {x: 80, y: 156, label: "france", color: [12, 212, 255], stroke: [77, 225, 255], labelPos: "below"},
+            {x: 135, y: 165, label: "japan", color: [12, 212, 255], stroke: [77, 225, 255], labelPos: "below"},
             
             // Emotions cluster (green)
-            {x: 284, y: 198, label: "happy", color: [39, 174, 96], labelPos: "left"},
-            {x: 320, y: 220, label: "sad", color: [39, 174, 96], labelPos: "below"},
-            {x: 297, y: 196, label: "angry", color: [39, 174, 96], labelPos: "above"}
+            {x: 284, y: 198, label: "happy", color: [141, 255, 10], stroke: [170, 255, 77], labelPos: "left"},
+            {x: 320, y: 220, label: "sad", color: [141, 255, 10], stroke: [170, 255, 77], labelPos: "below"},
+            {x: 297, y: 196, label: "angry", color: [141, 255, 10], stroke: [170, 255, 77], labelPos: "above"}
         ];
         
         // Random starting positions
@@ -52,6 +66,9 @@
         function setup() {
             let size = min(windowWidth, windowHeight);
             createCanvas(size, size);
+            
+            // Set square line caps for blocky appearance
+            drawingContext.lineCap = 'square';
             
             // Set consistent random seed for reproducible starting positions
             randomSeed(42);
@@ -63,6 +80,7 @@
                     y: random(70, 230),
                     label: finalPositions[i].label,
                     color: finalPositions[i].color,
+                    stroke: finalPositions[i].stroke,
                     labelPos: finalPositions[i].labelPos
                 };
                 startPositions.push(startPos);
@@ -136,15 +154,15 @@
         }
         
         function drawVisualization() {
-            background(255);
+            background(25, 25, 25); // Dark background matching reveal.js
             
             // Scale factors
             let scaleX = width / 400;
             let scaleY = height / 300;
             
             // Draw axes
-            stroke(0);
-            strokeWeight(4);
+            stroke(255); // White axes for dark theme
+            strokeWeight(3); // Medium thickness axes
             line(50 * scaleX, 50 * scaleY, 50 * scaleX, 250 * scaleY);
             line(50 * scaleX, 250 * scaleY, 350 * scaleX, 250 * scaleY);
             
@@ -172,6 +190,7 @@
                         y: lerp(startPositions[i].y, finalPositions[i].y, frameProgress) * scaleY,
                         label: finalPositions[i].label,
                         color: finalPositions[i].color,
+                        stroke: finalPositions[i].stroke,
                         labelPos: finalPositions[i].labelPos
                     };
                     displayPositions.push(pos);
@@ -185,6 +204,7 @@
                         y: lerp(startPositions[i].y, finalPositions[i].y, progress) * scaleY,
                         label: finalPositions[i].label,
                         color: finalPositions[i].color,
+                        stroke: finalPositions[i].stroke,
                         labelPos: finalPositions[i].labelPos
                     };
                     displayPositions.push(pos);
@@ -195,12 +215,14 @@
             textSize(16 * min(scaleX, scaleY));
             for (let p of displayPositions) {
                 // Draw point
-                fill(p.color);
-                noStroke();
-                circle(p.x, p.y, 12 * min(scaleX, scaleY));
+                fill(p.color[0], p.color[1], p.color[2], 100); // Transparent fill
+                stroke(p.color); // Normal color stroke
+                strokeWeight(1); // 1px stroke
+                circle(p.x, p.y, 10 * min(scaleX, scaleY)); // Smaller points
                 
                 // Draw label
-                fill(0);
+                fill(255); // White text for dark theme
+                noStroke(); // Remove stroke from text
                 textAlign(CENTER, CENTER);
                 let labelX = p.x;
                 let labelY = p.y;
@@ -228,7 +250,7 @@
             }
             
             // Draw progress indicator to the right of x-axis
-            fill(100);
+            fill(200); // Light gray for dark theme
             textAlign(LEFT, CENTER);
             textSize(14 * min(scaleX, scaleY));
             text(`${currentSlide}/${totalSlides}`, 360 * scaleX, 250 * scaleY);
