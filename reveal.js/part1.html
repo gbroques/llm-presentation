@@ -110,9 +110,51 @@
 					</p>
 				</section>
 
+				<section data-auto-animate>
+					<p style="font-size: 2em;">
+						<span data-id="t" style="display: inline-block;">T</span><span data-id="f" style="display: inline-block;">F</span><span data-id="dash" style="display: inline-block;">—</span><span data-id="i" style="display: inline-block;">I</span><span data-id="d" style="display: inline-block;">D</span><span data-id="f2" style="display: inline-block;">F</span>
+					</p>
+				</section>
+
+				<section data-auto-animate>
+					<p style="font-size: 1.5em;">
+						<span data-id="t" style="display: inline-block;">T</span>erm <span data-id="f" style="display: inline-block;">F</span>requency
+					</p>
+					<p style="font-size: 1.5em;">
+						<span data-id="i" style="display: inline-block;">I</span>nverse <span data-id="d" style="display: inline-block;">D</span>ocument <span data-id="f2" style="display: inline-block;">F</span>requency
+					</p>
+				</section>
+
 				<section>
-					<img src="gerard_salton.jpg" alt="Gerard Salton" style="width: 300px; height: auto;">
-					<p>Salton, G. and C. S. Yang (1973). On the specification of term values in automatic indexing.</p>
+					<img src="gerard_salton.jpg" alt="Gerard Salton">
+					<p>Gerard Salton and C. S. Yang (1973)</p>
+					<p>&ldquo;On the specification of term values in automatic indexing&rdquo;</p>
+				</section>
+
+				<section>
+					<div>
+						<span style="display: inline-block; margin-right: calc(var(--r-block-margin) * 2); border: 2px solid var(--roygbiv-blue); border-radius: 4px; padding: 12px;">very very <span style="color: var(--roygbiv-red); border-bottom: 4px solid var(--roygbiv-green);">hot</span></span>
+						<span style="display: inline-block; margin-right: calc(var(--r-block-margin) * 2);"><span style="border-bottom: 4px solid var(--roygbiv-green);">hot</span> new song</span>
+						<span style="display: inline-block; margin-right: calc(var(--r-block-margin) * 2);">very new song</span>
+					</div>
+					<div>
+						<p>TF-IDF(<span style="color: var(--roygbiv-red);">hot</span>, <span style="color: var(--roygbiv-blue);">d<sub>1</sub></span>) = <span style="color: var(--roygbiv-red);">1</span> × log(3/<span style="color: var(--roygbiv-green);">2</span>)</p>
+					</div>
+				</section>
+
+				<section>
+					<p style="font-size: 0.9em;">
+					$$
+					\begin{array}{l|ccccc}
+					& \text{hot} & \text{new} & \text{song} & \text{tamale} & \text{very} \\
+					\hline
+					\text{very very hot} & \color{#8DFF0A}{0.13} & \color{#0CD4FF}{0.00} & \color{#0CD4FF}{0.00} & \color{#0CD4FF}{0.00} & \color{#FF3A06}{0.60} \\
+					\text{hot new song} & \color{#8DFF0A}{0.13} & \color{#8DFF0A}{0.13} & \color{#FF8833}{0.30} & \color{#0CD4FF}{0.00} & \color{#0CD4FF}{0.00} \\
+					\text{very new song} & \color{#0CD4FF}{0.00} & \color{#8DFF0A}{0.13} & \color{#FF8833}{0.30} & \color{#0CD4FF}{0.00} & \color{#FF8833}{0.30} \\
+					\text{new hot tamale} & \color{#8DFF0A}{0.13} & \color{#8DFF0A}{0.13} & \color{#0CD4FF}{0.00} & \color{#FF3A06}{0.60} & \color{#0CD4FF}{0.00}
+					\end{array}
+					$$
+					</p>
 				</section>
 
 				<section>
