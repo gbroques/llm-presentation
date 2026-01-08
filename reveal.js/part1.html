@@ -50,6 +50,25 @@
       section[style*="--col1-bg"] .katex .mtable .col-align-c:nth-child(1) .vlist-t .mord > .mord:not([style*="transparent"]) { text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important; }
       section[style*="--col2-bg"] .katex .mtable .col-align-c:nth-child(4) .vlist-t .mord > .mord:not([style*="transparent"]) { text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important; }
       section[style*="--col4-bg"] .katex .mtable .col-align-c:nth-child(10) .vlist-t .mord > .mord:not([style*="transparent"]) { text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important; }
+      
+      /* Half-darkened background overlay with fade transition */
+      .half-darkened::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 40%;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.6);
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out;
+      }
+      
+      .half-darkened.present::after {
+        opacity: 1;
+      }
 		</style>
 	</head>
 
@@ -205,6 +224,12 @@
 							<span style="display: inline-block;">3</span><span style="margin: 0 0.2em; font-weight: bold;">/</span><span style="display: inline-block;" data-id="number-2">2</span>
 						</span>
 					</p>
+				</section>
+
+				<section data-background-image="idf_no_log.png" data-background-size="contain" data-background-transition="none">
+				</section>
+
+				<section data-background-image="idf_no_log.png" data-background-size="contain" class="half-darkened" data-background-transition="none">
 				</section>
 
 				<section data-background-iframe="tfidf_interactive.html" data-background-interactive>
