@@ -23,7 +23,7 @@ ax.set_facecolor('#191919')
 
 plt.plot(df, idf, color=colors['blue'], linewidth=2, label='IDF')
 plt.xlabel('Document Frequency', color='white', fontsize=16, labelpad=15)
-plt.ylabel('IDF(t)', color='white', fontsize=16, labelpad=15)
+plt.ylabel('IDF = log(N/df)', color='white', fontsize=16, labelpad=15)
 plt.tick_params(colors='white', labelsize=14)
 ax.spines['bottom'].set_color('white')
 ax.spines['left'].set_color('white')
