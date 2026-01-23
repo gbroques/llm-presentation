@@ -30,6 +30,10 @@ ax.spines['left'].set_color('white')
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 
+# Add labels
+ax.text(100, 0.5, 'common words', color='white', fontsize=12, ha='right')
+ax.text(5, 4.5, 'rare words', color='white', fontsize=12, ha='left')
+
 plt.tight_layout(pad=2.0)
 plt.savefig('reveal.js/idf_plot.png', 
             facecolor='#191919', dpi=150, bbox_inches='tight', pad_inches=0.3)
